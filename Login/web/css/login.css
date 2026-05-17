@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background-color: #f4f6f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    width: 80%;
+    max-width: 1000px;
+    height: 600px;
+    display: flex;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+/* Panel izquierdo */
+.login-panel {
+    flex: 1;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo .bars {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 10px auto;
+    background: repeating-linear-gradient(
+        to right,
+        #557c3e,
+        #557c3e 6px,
+        transparent 6px,
+        transparent 10px
+    );
+}
+
+.logo h2 {
+    font-weight: 600;
+    color: #000;
+}
+
+.logo span {
+    color: #557c3e;
+}
+
+.login-form label {
+    font-weight: 500;
+    color: #333;
+}
+
+.input-box {
+    position: relative;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 12px 40px 12px 15px;
+    border: 1.5px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-box input:focus {
+    border-color: #557c3e;
+}
+
+.icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #557c3e;
+}
+
+.forgot {
+    display: block;
+    text-align: right;
+    font-size: 13px;
+    color: #8b5e3c;
+    text-decoration: none;
+    margin-bottom: 25px;
+}
+
+.btn-login {
+    width: 100%;
+    background-color: #557c3e;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-login:hover {
+    background-color: #466834;
+}
+
+/* Panel derecho */
+.image-panel {
+    flex: 1.2;
+    background-color: #f7f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-panel img {
+    width: 80%;
+    max-width: 400px;
+}
