@@ -1,0 +1,126 @@
+<div class="contenedor-principal">
+  <aside class="menu-lateral">
+
+    <div class="encabezado-negocio">
+      <div class="Logo"> <img src="/Logo.png" width="50px"></div>
+      <div class="nombre-negocio"> Minimarket <br>Los Robles</div>
+    </div>
+
+
+    <div class="seccion-usuario">
+      <div>
+        <div class="nombre-usuario"><!-- Verificar que usuario_session no sea null -->
+
+        </div>
+        <div class="rol-usuario">
+          <!-- Verificar que rol no sea null -->
+
+        </div>
+      </div>
+    </div>
+
+    <nav class="navegacion">
+      <a href="#" class="boton-menu activo">
+        <span class="icono"><img src="/reportes.png" width="30px"></span>
+        <span class="texto-boton">Reportes</span>
+      </a>
+      <a href="#" class="boton-menu activo">
+        <span class="icono"><img src="/abastecimiento.png" width="30px"></span>
+        <span class="texto-boton">Abastecimiento</span>
+      </a>
+      <a href="#" class="boton-menu">
+        <span class="icono"><img src="/ventas.png" width="30px"></span>
+        <span class="texto-boton">Pedidos</span>
+      </a>
+      <a href="#" class="boton-menu">
+        <span class="icono"><img src="/producto.png" width="30px"></span>
+        <span class="texto-boton">Inventario</span>
+      </a>
+
+      <a href="#" class="boton-menu activo">
+        <img src="/producto.png" width="26px">
+        Proveedores
+      </a>
+
+      <a href="#" class="boton-menu">
+        <span class="icono"><img src="/Empleados.png" width="30px"></span>
+        <span class="texto-boton">Usuarios</span>
+      </a>
+    </nav>
+
+
+    <div class="seccion-cerrar">
+      <button class="boton-cerrar" onclick="cerrarSesion()">
+        <span class="icono"><img src="/Cerrar_S.png" width="30px" style="filter: invert(1)"></span>
+        <span>Cerrar Sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="contenido-principal">
+    <h1 class="titulo-contenido">Panel de Reportes</h1>
+
+    <div class="seccion-filtros">
+      <label for="fecha-inicio">Desde:</label>
+      <input type="date" id="fecha-inicio" class="input-fecha">
+      <label for="fecha-fin">Hasta:</label>
+      <input type="date" id="fecha-fin" class="input-fecha">
+      <button id="btn-generar-reporte" class="btn-generar">Generar</button>
+      <button id="btn-imprimir-reporte" class="btn-imprimir">Imprimir (PDF)</button>
+    </div>
+
+    <div class="contenedor-metricas">
+      <div class="metrica-card">
+        <h3>Ventas Totales</h3>
+        <p>S/ {{ totalVentas }}</p>
+      </div>
+      <div class="metrica-card">
+        <h3>N° de Ventas</h3>
+        <p>{{ numeroVentas }}</p>
+      </div>
+      <div class="metrica-card">
+        <h3>Productos Vendidos</h3>
+        <p id="metrica-prod-vendidos">0</p>
+      </div>
+    </div>
+
+    <div class="contenedor-graficos">
+      <div class="grafico-card">
+        <h3>Ventas por Día</h3>
+        <canvas id="graficoVentasDia"></canvas>
+      </div>
+      <div class="grafico-card">
+        <h3>Ventas por Categoría</h3>
+        <canvas id="graficoVentasCategoria"></canvas>
+      </div>
+    </div>
+
+    <div class="contenedor-tabla">
+      <table id="tablaReportes" class="tabla-datos">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>N° Ventas</th>
+            <th>Productos</th>
+            <th>Subtotal</th>
+            <th>IGV</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="tablaReportesBody">
+          <tr *ngFor="let reporte of reportes">
+
+            <td>{{ reporte.fecha }}</td>
+            <td>{{ reporte.ventas }}</td>
+            <td>{{ reporte.productos }}</td>
+            <td>{{ reporte.subtotal }}</td>
+            <td>{{ reporte.igv }}</td>
+            <td>{{ reporte.total }}</td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
