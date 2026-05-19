@@ -1,1 +1,651 @@
 /* You can add global styles to this file, and also import other style files */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.contenedor-principal {
+    display: flex;
+    height: 100vh;
+}
+
+.menu-lateral {
+    width: 220px;
+    background: white;
+    color: #27ae60;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.encabezado-negocio {
+    display: flex;
+    padding: 18px 6px;
+    background-color: #f8f9fa;
+    text-align: center;
+    gap: 5px;
+
+}
+
+.Logo{
+    width: 60px;
+    height: 60px;
+
+}
+.nombre-negocio {
+    position: relative;
+    top: 3px;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    letter-spacing: -1px;
+}
+
+.seccion-usuario {
+    padding: 9px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.foto-usuario {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+
+}
+
+.info-usuario {
+    flex: 1;
+}
+
+.nombre-usuario {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: black;
+}
+
+.rol-usuario {
+    font-size: 13px;
+    color: #7f8c8d;
+}
+
+.navegacion {
+    flex: 1;
+    padding: 20px 0;
+    overflow-y: auto;
+}
+
+.boton-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 9px 20px;
+    color: #303030;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+    cursor: pointer;
+}
+
+.boton-menu:hover {
+    background-color: #e8f5e9;
+    border-left-color: #27ae60;
+    padding-left: 30px;
+}
+
+
+.icono {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.texto-boton {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.seccion-cerrar {
+    padding: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.boton-cerrar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 16px;
+    background-color: #239954 ;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 550;
+}
+
+.boton-cerrar:hover {
+    background-color: #1c6139;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.contenido-principal {
+    flex: 1;
+    padding: 20px 40px 40px;
+    overflow-y: auto;
+}
+
+.titulo-contenido {
+    font-size: 28px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.tarjeta-bienvenida {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ==================== ESTILOS PARA CARRUSEL ==================== */
+.carousel {
+    width: 100%;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    height: 300px;
+    position: relative;
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-slide {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide img {
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-button.prev {
+    left: 15px;
+}
+
+.carousel-button.next {
+    right: 15px;
+}
+
+/* ==================== ESTILOS PARA MODAL ==================== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.modal.mostrar {
+    display: block;
+    opacity: 1;
+}
+
+.modal-contenido {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    animation: modalFadeIn 0.3s;
+}
+
+@keyframes modalFadeIn {
+    from {opacity: 0; transform: translateY(-50px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.cerrar {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cerrar:hover,
+.cerrar:focus {
+    color: black;
+    text-decoration: none;
+}
+
+
+/* Sección de acciones */
+.seccion-acciones {
+    margin: 20px 0;
+    text-align: right;
+}
+
+/* Estilos para el botón Agregar */
+.btn-agregar {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-agregar:hover {
+    background-color: #219653;
+    transform: translateY(-2px);
+}
+
+.btn-agregar .icono {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* ==================== ESTILOS PARA TABLA DE VENTAS ==================== */
+
+.seccion-filtros {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.input-buscar {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.input-buscar:focus {
+    outline: none;
+    border-color: #27ae60;
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+}
+
+.btn-actualizar {
+    padding: 12px 30px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-actualizar:hover {
+    background-color: #229954;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+.contenedor-tabla {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.tabla-datos {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.tabla-datos thead {
+    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+    color: white;
+}
+
+.tabla-datos thead th {
+    padding: 15px 12px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.tabla-datos tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+}
+
+.tabla-datos tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.tabla-datos tbody td {
+    padding: 12px;
+    color: #2c3e50;
+    vertical-align: middle;
+}
+
+/* Estilos para los badges de estado */
+.estado-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    min-width: 80px;
+    text-align: center;
+}
+
+.estado-completado {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.estado-pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.estado-cancelado {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.tabla-datos tfoot {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.tabla-datos tfoot td {
+    padding: 15px 12px;
+    color: #2c3e50;
+}
+
+.texto-cargando,
+.texto-error,
+.texto-vacio {
+    text-align: center;
+    padding: 40px !important;
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+.texto-error {
+    color: #e74c3c;
+}
+
+.fila-deshabilitada {
+    opacity: 0.5;
+    background-color: #f8f9fa;
+}
+
+/* Estilos para el botón de agregar y formulario flotante */
+.contenedor-boton-agregar {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.btn-agregar {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.btn-agregar:hover {
+    background-color: #219653;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+.btn-agregar:hover {
+    background-color: #219653;
+}
+
+.formulario-flotante {
+    /* Estilos eliminados ya que ahora usamos el modal */
+    display: none;
+}
+
+.contenedor-boton-agregar:hover .formulario-flotante {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.formulario-flotante h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.grupo-formulario {
+    margin-bottom: 15px;
+}
+
+.grupo-formulario label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 0.9em;
+}
+
+.grupo-formulario input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95em;
+}
+
+.btn-guardar {
+    width: 100%;
+    padding: 8px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.btn-guardar:hover {
+    background-color: #219653;
+}
+
+/* Estilos para los botones de acción en la tabla */
+.celda-acciones {
+    white-space: nowrap;
+    text-align: center;
+}
+
+.btn-accion {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em;
+    margin: 0 3px;
+    padding: 5px 8px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.btn-eliminar {
+    color: #e74c3c;
+}
+
+.btn-eliminar:hover {
+    background-color: #fde8e6;
+    color: #c0392b;
+}
+
+.btn-modificar {
+    color: #3498db;
+}
+
+.btn-modificar:hover {
+    background-color: #ebf5fb;
+    color: #2980b9;
+}
+
+/* Badges de estado */
+.badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-activo {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.badge-inactivo {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Botones de acción */
+.btn-accion {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    margin: 0 3px;
+}
+
+.btn-accion:hover {
+    transform: scale(1.1);
+}
+
+.btn-ver {
+    background-color: #3498db;
+}
+
+.btn-ver:hover {
+    background-color: #2980b9;
+}
+
+.btn-editar {
+    background-color: #f39c12;
+}
+
+.btn-editar:hover {
+    background-color: #e67e22;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tabla-datos {
+        font-size: 12px;
+    }
+
+    .tabla-datos thead th,
+    .tabla-datos tbody td {
+        padding: 8px 6px;
+    }
+
+    .seccion-filtros {
+        flex-direction: column;
+    }
+
+    .input-buscar,
+    .btn-actualizar {
+        width: 100%;
+    }
+}
