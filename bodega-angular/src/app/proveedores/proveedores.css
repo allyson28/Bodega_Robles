@@ -1,0 +1,25 @@
+/* Color estandarizado para los headers de tablas */
+.text-success-dark {
+  color: #0f5132 !important;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+/* Clases auxiliares para selectores responsivos */
+.min-w-200 {
+  min-width: 200px;
+}
+
+.fs-7 {
+  font-size: 0.75rem !important;
+}
+
+.tracking-wider {
+  letter-spacing: 0.5px;
+}
+
+/* Efectos foco consistentes con la marca */
+.form-control:focus, .form-select:focus {
+  border-color: #198754 !important;
+  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.15) !important;
+}

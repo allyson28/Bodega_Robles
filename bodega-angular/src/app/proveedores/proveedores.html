@@ -1,0 +1,153 @@
+<div class="container-fluid p-0">
+  <h1 class="h3 mb-4 text-dark fw-bold">Gestión de Proveedores</h1>
+
+  <!-- Tarjeta de Filtros y Acciones -->
+  <div class="card border-0 shadow-sm p-4 mb-4 bg-white rounded-3">
+    <div class="d-flex flex-wrap align-items-center gap-3">
+      
+      <button class="btn btn-success px-4 fw-semibold shadow-sm d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalRegistrarProveedor">
+        <span>🏢</span> Registrar proveedor
+      </button>
+      
+      <div class="flex-grow-1 min-w-200">
+        <input type="text" id="buscarItem" placeholder="Buscar por nombre..." class="form-control bg-light">
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Tabla Principal de Proveedores -->
+  <div class="card border-0 shadow-sm rounded-3 overflow-hidden bg-white mb-4">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-success text-uppercase fs-7 text-nowrap">
+          <tr>
+            <th class="py-3 px-4 text-success-dark">ID</th>
+            <th class="py-3 text-success-dark">RUC</th>
+            <th class="py-3 text-success-dark">Razón Social</th>
+            <th class="py-3 text-success-dark">Nombre Comercial</th>
+            <th class="py-3 text-success-dark">Dirección</th>
+            <th class="py-3 text-success-dark">Teléfono</th>
+            <th class="py-3 text-success-dark">Correo</th>
+            <th class="py-3 px-4 text-center text-success-dark">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="fs-6">
+          
+          <tr>
+            <td class="py-3 px-4 fw-bold text-secondary">1</td>
+            <td class="py-3 font-monospace text-secondary">20601234567</td>
+            <td class="py-3 fw-medium text-dark">Distribuidora Alianza S.A.C.</td>
+            <td class="py-3 text-secondary">Alianza Distribuciones</td>
+            <td class="py-3 text-muted small">Av. Industrial 450, Lima</td>
+            <td class="py-3 text-secondary">(01) 445-8921</td>
+            <td class="py-3 text-secondary">contacto@alianza.com.pe</td>
+            <td class="py-3 px-4 text-center">
+              <div class="d-flex justify-content-center gap-2">
+                <button class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#modalRegistrarProveedor">
+                  <span>✏️</span> Editar
+                </button>
+                <button class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#modalConfirmarEliminar">
+                  <span>🗑️</span> Eliminar
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="py-3 px-4 fw-bold text-secondary">2</td>
+            <td class="py-3 font-monospace text-secondary">20100128451</td>
+            <td class="py-3 fw-medium text-dark">Corporación Lindley S.A.</td>
+            <td class="py-3 text-secondary">Arca Continental Lindley</td>
+            <td class="py-3 text-muted small">Av. Javier Prado Este 4210, Surco</td>
+            <td class="py-3 text-secondary">(01) 313-9200</td>
+            <td class="py-3 text-secondary">proveedores@lindley.pe</td>
+            <td class="py-3 px-4 text-center">
+              <div class="d-flex justify-content-center gap-2">
+                <button class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#modalRegistrarProveedor">
+                  <span>✏️</span> Editar
+                </button>
+                <button class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#modalConfirmarEliminar">
+                  <span>🗑️</span> Eliminar
+                </button>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Registrar / Editar Proveedor -->
+<div class="modal fade" id="modalRegistrarProveedor" tabindex="-1" aria-labelledby="modalRegistrarProveedorLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content border-0 shadow">
+      
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title fw-bold" id="modalRegistrarProveedorLabel">🏢 Registro de Proveedores</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body p-4">
+        <form id="formulario-proveedor" class="row g-3">
+          
+          <div class="col-12 col-md-6">
+            <label class="form-label fw-semibold text-dark small">RUC</label>
+            <input type="text" class="form-control" placeholder="Ingrese el RUC de 11 dígitos" required>
+          </div>
+          
+          <div class="col-12 col-md-6">
+            <label class="form-label fw-semibold text-dark small">Razón Social</label>
+            <input type="text" class="form-control" placeholder="Denominación legal de la empresa" required>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label class="form-label fw-semibold text-dark small">Nombre Comercial</label>
+            <input type="text" class="form-control" placeholder="Nombre de marca o establecimiento">
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label class="form-label fw-semibold text-dark small">Teléfono</label>
+            <input type="text" class="form-control" placeholder="Fijo o celular de contacto">
+          </div>
+
+          <div class="col-12">
+            <label class="form-label fw-semibold text-dark small">Dirección Fiscal / Comercial</label>
+            <input type="text" class="form-control" placeholder="Calle, Avenida o Jirón con número y distrito">
+          </div>
+
+          <div class="col-12">
+            <label class="form-label fw-semibold text-dark small">Correo Electrónico</label>
+            <input type="email" class="form-control" placeholder="ejemplo@proveedor.com.pe">
+          </div>
+
+        </form>
+      </div>
+      
+      <div class="modal-footer bg-light border-top">
+        <button type="button" class="btn btn-outline-secondary px-4 fw-semibold" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" form="formulario-proveedor" class="btn btn-success px-4 fw-semibold shadow-sm">Registrar</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Confirmar Eliminación -->
+<div class="modal fade" id="modalConfirmarEliminar" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-body p-4 text-center">
+        <div class="text-danger fs-1 mb-2">⚠️</div>
+        <h5 class="fw-bold text-dark mb-2">¿Confirmar Eliminación?</h5>
+        <p class="text-secondary mb-4">¿Estás seguro de que deseas eliminar este proveedor? Al hacerlo, se verán afectados de forma permanente los historiales comerciales vinculados.</p>
+        <div class="d-flex justify-content-center gap-2">
+          <button type="button" class="btn btn-light border px-4 fw-semibold text-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger px-4 fw-semibold shadow-sm" data-bs-dismiss="modal">Eliminar de todos modos</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

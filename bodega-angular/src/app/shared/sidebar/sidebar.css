@@ -1,0 +1,38 @@
+.sidebar {
+  width: 260px; /* Ancho normal */
+  min-width: 260px;
+  height: 100vh;
+  transition: all 0.3s ease-in-out;
+  z-index: 100;
+}
+
+/* Cuando se le añade la clase collapsed por TypeScript */
+.sidebar.collapsed {
+  width: 70px;
+  min-width: 70px;
+}
+
+/* Estilos de los ítems del menú */
+.menu-item {
+  color: #495057;
+  padding: 0.75rem 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.menu-item:hover {
+  background-color: #f8f9fa;
+  color: #198754;
+}
+
+/* Item activo gracias a routerLinkActive */
+.menu-item.active {
+  background-color: #d1e7dd !important;
+  color: #198754 !important;
+  font-weight: 600;
+}
+
+/* Centrar iconos en modo colapsado */
+.sidebar.collapsed .menu-item {
+  justify-content: center;
+  padding: 0.75rem 0;
+}

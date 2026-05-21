@@ -1,126 +1,93 @@
-<div class="contenedor-principal">
-  <aside class="menu-lateral">
+<div class="container-fluid p-0">
+  
+  <h1 class="h3 mb-4 text-dark fw-bold">Panel de Reportes</h1>
 
-    <div class="encabezado-negocio">
-      <div class="Logo"> <img src="/Logo.png" width="50px"></div>
-      <div class="nombre-negocio"> Minimarket <br>Los Robles</div>
+  <div class="card border-0 shadow-sm p-4 mb-4 bg-white rounded-3">
+    <div class="row g-3 align-items-center">
+      <div class="col-12 col-sm-auto d-flex align-items-center gap-2">
+        <label for="fecha-inicio" class="form-label mb-0 fw-medium text-secondary">Desde:</label>
+        <input type="date" id="fecha-inicio" class="form-control">
+      </div>
+      <div class="col-12 col-sm-auto d-flex align-items-center gap-2">
+        <label for="fecha-fin" class="form-label mb-0 fw-medium text-secondary">Hasta:</label>
+        <input type="date" id="fecha-fin" class="form-control">
+      </div>
+      <div class="col-12 col-sm-auto">
+        <button id="btn-generar-reporte" class="btn btn-success px-4 fw-semibold shadow-sm">Generar</button>
+      </div>
+      <div class="col-12 col-sm-auto ms-sm-auto">
+        <button id="btn-imprimir-reporte" class="btn btn-primary px-4 fw-semibold shadow-sm d-flex align-items-center gap-2">
+          <span>🖨️</span> Imprimir (PDF)
+        </button>
+      </div>
     </div>
+  </div>
 
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-md-4">
+      <div class="card border-0 border-top border-success border-4 shadow-sm p-4 bg-white rounded-3 h-100">
+        <h3 class="fs-6 text-uppercase text-muted fw-semibold mb-2">Ventas Totales</h3>
+        <p class="fs-2 fw-bold text-dark mb-0">S/ {{ totalVentas }}</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="card border-0 border-top border-success border-4 shadow-sm p-4 bg-white rounded-3 h-100">
+        <h3 class="fs-6 text-uppercase text-muted fw-semibold mb-2">N° de Ventas</h3>
+        <p class="fs-2 fw-bold text-dark mb-0">{{ numeroVentas }}</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="card border-0 border-top border-success border-4 shadow-sm p-4 bg-white rounded-3 h-100">
+        <h3 class="fs-6 text-uppercase text-muted fw-semibold mb-2">Productos Vendidos</h3>
+        <p class="fs-2 fw-bold text-dark mb-0" id="metrica-prod-vendidos">0</p>
+      </div>
+    </div>
+  </div>
 
-    <div class="seccion-usuario">
-      <div>
-        <div class="nombre-usuario"><!-- Verificar que usuario_session no sea null -->
-
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-lg-6">
+      <div class="card border-0 shadow-sm p-4 bg-white rounded-3">
+        <h3 class="fs-5 text-dark fw-semibold mb-3">Ventas por Día</h3>
+        <div class="ratio ratio-21x9" style="max-height: 250px;">
+          <canvas id="graficoVentasDia"></canvas>
         </div>
-        <div class="rol-usuario">
-          <!-- Verificar que rol no sea null -->
-
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="card border-0 shadow-sm p-4 bg-white rounded-3">
+        <h3 class="fs-5 text-dark fw-semibold mb-3">Ventas por Categoría</h3>
+        <div class="ratio ratio-21x9" style="max-height: 250px;">
+          <canvas id="graficoVentasCategoria"></canvas>
         </div>
       </div>
     </div>
+  </div>
 
-    <nav class="navegacion">
-      <a href="#" class="boton-menu activo">
-        <span class="icono"><img src="/reportes.png" width="30px"></span>
-        <span class="texto-boton">Reportes</span>
-      </a>
-      <a href="#" class="boton-menu activo">
-        <span class="icono"><img src="/abastecimiento.png" width="30px"></span>
-        <span class="texto-boton">Abastecimiento</span>
-      </a>
-      <a href="#" class="boton-menu">
-        <span class="icono"><img src="/ventas.png" width="30px"></span>
-        <span class="texto-boton">Pedidos</span>
-      </a>
-      <a href="#" class="boton-menu">
-        <span class="icono"><img src="/producto.png" width="30px"></span>
-        <span class="texto-boton">Inventario</span>
-      </a>
-
-      <a href="#" class="boton-menu activo">
-        <img src="/producto.png" width="26px">
-        Proveedores
-      </a>
-
-      <a href="#" class="boton-menu">
-        <span class="icono"><img src="/Empleados.png" width="30px"></span>
-        <span class="texto-boton">Usuarios</span>
-      </a>
-    </nav>
-
-
-    <div class="seccion-cerrar">
-      <button class="boton-cerrar" onclick="cerrarSesion()">
-        <span class="icono"><img src="/Cerrar_S.png" width="30px" style="filter: invert(1)"></span>
-        <span>Cerrar Sesión</span>
-      </button>
-    </div>
-  </aside>
-
-  <main class="contenido-principal">
-    <h1 class="titulo-contenido">Panel de Reportes</h1>
-
-    <div class="seccion-filtros">
-      <label for="fecha-inicio">Desde:</label>
-      <input type="date" id="fecha-inicio" class="input-fecha">
-      <label for="fecha-fin">Hasta:</label>
-      <input type="date" id="fecha-fin" class="input-fecha">
-      <button id="btn-generar-reporte" class="btn-generar">Generar</button>
-      <button id="btn-imprimir-reporte" class="btn-imprimir">Imprimir (PDF)</button>
-    </div>
-
-    <div class="contenedor-metricas">
-      <div class="metrica-card">
-        <h3>Ventas Totales</h3>
-        <p>S/ {{ totalVentas }}</p>
-      </div>
-      <div class="metrica-card">
-        <h3>N° de Ventas</h3>
-        <p>{{ numeroVentas }}</p>
-      </div>
-      <div class="metrica-card">
-        <h3>Productos Vendidos</h3>
-        <p id="metrica-prod-vendidos">0</p>
-      </div>
-    </div>
-
-    <div class="contenedor-graficos">
-      <div class="grafico-card">
-        <h3>Ventas por Día</h3>
-        <canvas id="graficoVentasDia"></canvas>
-      </div>
-      <div class="grafico-card">
-        <h3>Ventas por Categoría</h3>
-        <canvas id="graficoVentasCategoria"></canvas>
-      </div>
-    </div>
-
-    <div class="contenedor-tabla">
-      <table id="tablaReportes" class="tabla-datos">
-        <thead>
+  <div class="card border-0 shadow-sm rounded-3 overflow-hidden bg-white mb-4">
+    <div class="table-responsive">
+      <table id="tablaReportes" class="table table-hover align-middle mb-0">
+        <thead class="table-success text-uppercase fs-7 text-nowrap">
           <tr>
-            <th>Fecha</th>
-            <th>N° Ventas</th>
-            <th>Productos</th>
-            <th>Subtotal</th>
-            <th>IGV</th>
-            <th>Total</th>
+            <th class="py-3 px-4 text-success-dark">Fecha</th>
+            <th class="py-3 px-3 text-success-dark">N° Ventas</th>
+            <th class="py-3 px-3 text-success-dark">Productos</th>
+            <th class="py-3 px-3 text-success-dark">Subtotal</th>
+            <th class="py-3 px-3 text-success-dark">IGV</th>
+            <th class="py-3 px-4 text-success-dark">Total</th>
           </tr>
         </thead>
-        <tbody id="tablaReportesBody">
+        <tbody class="fs-6">
           <tr *ngFor="let reporte of reportes">
-
-            <td>{{ reporte.fecha }}</td>
-            <td>{{ reporte.ventas }}</td>
-            <td>{{ reporte.productos }}</td>
-            <td>{{ reporte.subtotal }}</td>
-            <td>{{ reporte.igv }}</td>
-            <td>{{ reporte.total }}</td>
-
+            <td class="py-3 px-4 fw-medium">{{ reporte.fecha }}</td>
+            <td class="py-3 px-3">{{ reporte.ventas }}</td>
+            <td class="py-3 px-3">{{ reporte.productos }}</td>
+            <td class="py-3 px-3">S/ {{ reporte.subtotal }}</td>
+            <td class="py-3 px-3">S/ {{ reporte.igv }}</td>
+            <td class="py-3 px-4 fw-bold text-dark">S/ {{ reporte.total }}</td>
           </tr>
         </tbody>
       </table>
     </div>
+  </div>
 
-  </main>
 </div>

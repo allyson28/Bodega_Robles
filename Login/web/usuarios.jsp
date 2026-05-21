@@ -149,57 +149,57 @@
             </div>
         </aside>
 
-        <main class="contenido-principal">
-            <h1 class="titulo-contenido">Gestión de Usuarios</h1>
-            
-            <div class="barra-acciones">
-                <button class="boton-crear">
-                    <span class="icono-boton">➕</span>
-                    Crear Nuevo Usuario
-                </button>
-            </div>
+    <main class="contenido-principal">
+        <h1 class="titulo-contenido">Gestión de Usuarios</h1>
+        
+        <div class="barra-acciones">
+            <button class="boton-crear">
+                <span class="icono-boton">➕</span>
+                Crear Nuevo Usuario
+            </button>
+        </div>
 
-            <table class="tabla-datos">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre Completo</th>
-                        <th>Rol de Usuario</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>101</td>
-                        <td>Ana García</td>
-                        <td>Vendedor</td>
-                        <td class="celda-acciones">
-                            <button class="boton-editar">Editar</button>
-                            <button class="boton-eliminar">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>102</td>
-                        <td>Juan Pérez</td>
-                        <td>Administrador</td>
-                        <td class="celda-acciones">
-                            <button class="boton-editar">Editar</button>
-                            <button class="boton-eliminar">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>103</td>
-                        <td>María López</td>
-                        <td>Almacén</td>
-                        <td class="celda-acciones">
-                            <button class="boton-editar">Editar</button>
-                            <button class="boton-eliminar">Eliminar</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </main>
-    </div>
+        <table class="tabla-datos">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre Completo</th>
+                    <th>Rol de Usuario</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>101</td>
+                    <td>Ana García</td>
+                    <td>Vendedor</td>
+                    <td class="celda-acciones">
+                        <button class="boton-editar">Editar</button>
+                        <button class="boton-eliminar">Eliminar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>102</td>
+                    <td>Juan Pérez</td>
+                    <td>Administrador</td>
+                    <td class="celda-acciones">
+                        <button class="boton-editar">Editar</button>
+                        <button class="boton-eliminar">Eliminar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>103</td>
+                    <td>María López</td>
+                    <td>Almacén</td>
+                    <td class="celda-acciones">
+                        <button class="boton-editar">Editar</button>
+                        <button class="boton-eliminar">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
 
     <div id="modal-usuario" class="modal-superposicion">
         <div class="modal-contenido">

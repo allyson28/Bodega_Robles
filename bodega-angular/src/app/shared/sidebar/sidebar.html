@@ -1,0 +1,57 @@
+<aside class="sidebar bg-white border-end d-flex flex-column justify-content-between" [ngClass]="{'collapsed': isCollapsed}">
+  
+  <div>
+    <div class="p-3 d-flex align-items-center justify-content-between encabezado-sidebar">
+      <div class="d-flex align-items-center logo-datos" *ngIf="!isCollapsed">
+        <img src="/Logo.png" width="35px" class="me-2">
+        <span class="fw-bold text-dark lh-sm">Los Robles<br><small class="text-muted fw-normal">Minimarket</small></span>
+      </div>
+      <div class="w-100 text-center" *ngIf="isCollapsed">
+        <img src="/Logo.png" width="35px" class="mb-2">
+      </div>
+      <button type="button" class="btn btn-light btn-sm text-success border-0 core-toggle-btn" (click)="toggleSidebar()">
+        {{ isCollapsed ? '👉' : '👈' }}
+      </button>
+    </div>
+
+    <nav class="nav flex-column px-2 gap-1 mt-3">
+      <a routerLink="/reportes" routerLinkActive="active" class="nav-link d-flex align-items-center rounded-3 menu-item">
+        <img src="/reportes.png" width="24px" class="menu-icon">
+        <span class="ms-3 text-menu" *ngIf="!isCollapsed">Reportes</span>
+      </a>
+      
+      <a routerLink="/abastecimiento" routerLinkActive="active" class="nav-link d-flex align-items-center rounded-3 menu-item">
+        <img src="/abastecimiento.png" width="24px" class="menu-icon">
+        <span class="ms-3 text-menu" *ngIf="!isCollapsed">Abastecimiento</span>
+      </a>
+
+      <a routerLink="/pedidos" routerLinkActive="active" class="nav-link d-flex align-items-center rounded-3 menu-item">
+        <img src="/ventas.png" width="24px" class="menu-icon">
+        <span class="ms-3 text-menu" *ngIf="!isCollapsed">Pedidos</span>
+      </a>
+
+      <a routerLink="/inventario" routerLinkActive="active" class="nav-link d-flex align-items-center rounded-3 menu-item">
+        <img src="/producto.png" width="24px" class="menu-icon">
+        <span class="ms-3 text-menu" *ngIf="!isCollapsed">Inventario</span>
+      </a>
+
+      <a routerLink="/proveedores" routerLinkActive="active" class="nav-link d-flex align-items-center rounded-3 menu-item">
+        <img src="/producto.png" width="24px" class="menu-icon">
+        <span class="ms-3 text-menu" *ngIf="!isCollapsed">Proveedores</span>
+      </a>
+
+      <a routerLink="/usuarios" routerLinkActive="active" class="nav-link d-flex align-items-center rounded-3 menu-item">
+        <img src="/Empleados.png" width="24px" class="menu-icon">
+        <span class="ms-3 text-menu" *ngIf="!isCollapsed">Usuarios</span>
+      </a>
+    </nav>
+  </div>
+
+  <div class="p-2 border-top">
+    <button class="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center border-0 rounded-3 py-2" (click)="cerrarSesion()">
+      <img src="/Cerrar_S.png" width="20px" [style.filter]="'invert(0)'">
+      <span class="ms-2" *ngIf="!isCollapsed">Cerrar Sesión</span>
+    </button>
+  </div>
+
+</aside>

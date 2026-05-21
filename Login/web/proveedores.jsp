@@ -343,65 +343,65 @@
             </div>
         </aside>
 
-        <!-- ------------------------ CONTENIDO PRINCIPAL ------------------------ -->
-        <main class="contenido-principal">
-            <h1 class="titulo-contenido">Gestión de proveedores</h1>
+    <!-- ------------------------ CONTENIDO PRINCIPAL ------------------------ -->
+    <main class="contenido-principal">
+        <h1 class="titulo-contenido">Gestión de proveedores</h1>
 
-            <div class="seccion-filtros">
-                <button class="btn-crear-item" id="boton-crear-producto">Registrar proveedor</button>
-                <input type="text" id="buscarItem" placeholder="Buscar por nombre..." class="input-buscar">
-            </div>
+        <div class="seccion-filtros">
+            <button class="btn-crear-item" id="boton-crear-producto">Registrar proveedor</button>
+            <input type="text" id="buscarItem" placeholder="Buscar por nombre..." class="input-buscar">
+        </div>
 
-            <!-- ------------------------ TABLA ------------------------ -->
-            <div class="contenedor-tabla">
-                <%
-                    ProveedorDao dao = new ProveedorDaoImpl();
-                    List<Proveedor> lista = dao.obtener_proveedores();
-                %>
+        <!-- ------------------------ TABLA ------------------------ -->
+        <div class="contenedor-tabla">
+            <%
+                ProveedorDao dao = new ProveedorDaoImpl();
+                List<Proveedor> lista = dao.obtener_proveedores();
+            %>
 
-                <table class="tabla-datos">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>RUC</th>
-                            <th>Razon Social</th>
-                            <th>Nombre Comercial</th>
-                            <th>Dirección</th>
-                            <th>Telefono</th>
-                            <th>Correo</th>
-                            <th colspan="2">Acciones</th>
-                        </tr>
-                    </thead>
+            <table class="tabla-datos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>RUC</th>
+                        <th>Razon Social</th>
+                        <th>Nombre Comercial</th>
+                        <th>Dirección</th>
+                        <th>Telefono</th>
+                        <th>Correo</th>
+                        <th colspan="2">Acciones</th>
+                    </tr>
+                </thead>
 
-                    <tbody>
-                        <%
-                            for (Proveedor p : lista) {
-                        %>
-                        <tr>
-                            <td><%= p.getId_proveedor() %></td>
-                            <td><%= p.getRuc() %></td>
-                            <td><%= p.getRazon_social() %></td>
-                            <td><%= p.getNombre_comercial() %></td>
-                            <td><%= p.getDireccion() %></td>
-                            <td><%= p.getTelefono() %></td>
-                            <td><%= p.getEmail() %></td>
+                <tbody>
+                    <%
+                        for (Proveedor p : lista) {
+                    %>
+                    <tr>
+                        <td><%= p.getId_proveedor() %></td>
+                        <td><%= p.getRuc() %></td>
+                        <td><%= p.getRazon_social() %></td>
+                        <td><%= p.getNombre_comercial() %></td>
+                        <td><%= p.getDireccion() %></td>
+                        <td><%= p.getTelefono() %></td>
+                        <td><%= p.getEmail() %></td>
 
-                            <!-- EDITAR -->
-                            <td>
-                                <button class="btn-editar"data-id="<%= p.getId_proveedor() %>">Editar</button>
-                            </td>
+                        <!-- EDITAR -->
+                        <td>
+                            <button class="btn-editar"data-id="<%= p.getId_proveedor() %>">Editar</button>
+                        </td>
 
-                            <!-- ELIMINAR -->
-                            <td>
-                                <button class="btn-eliminar" data-id="<%= p.getId_proveedor() %>">Eliminar</button>
-                            </td>
-                        </tr>
-                        <% } %>
-                    </tbody>
-                </table>
-            </div>
-        </main>
-    </div>
+                        <!-- ELIMINAR -->
+                        <td>
+                            <button class="btn-eliminar" data-id="<%= p.getId_proveedor() %>">Eliminar</button>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
 
     <div id="modal-item" class="modal-superposicion">
         <div class="modal-contenido">
