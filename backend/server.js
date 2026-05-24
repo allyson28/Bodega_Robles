@@ -24,7 +24,7 @@ db.connect((err)=>{
 app.get('/usuarios',(req,res)=>{
 
     db.query(
-        'SELECT * FROM usuarios',
+        'SELECT * FROM usuario',
         (err,result)=>{
 
             if(err){
