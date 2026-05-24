@@ -1,0 +1,11 @@
+# Angular
+node_modules/
+dist/
+
+# NetBeans
+build/
+dist/
+nbproject/private/
+
+# Logs
+*.log
