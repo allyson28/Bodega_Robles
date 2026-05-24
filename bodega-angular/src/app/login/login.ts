@@ -1,34 +1,54 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from '../services/login.service';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef} from '@angular/core';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
+
+
 export class Login {
-  private router = inject(Router); // Inyecta el Router para redirigir después del inicio de sesión
+  mensaje = '';
+  private cdr = inject(ChangeDetectorRef);
+  private loginService = inject(LoginService);
+  private router = inject(Router);
 
-  // Modificamos los parámetros para recibir el usuario y la clave
   iniciarSesion(usuario: string, clave: string) {
-    console.log('Intentando iniciar sesión con:', usuario, clave);
+    console.log(usuario, clave);
 
-    if (this.validarCredenciales(usuario, clave)) {
-      console.log('Inicio de sesión exitoso');
-      this.router.navigate(['/reportes']); // Redirige solo si es válido
-    } else {
-      console.error('Credenciales inválidas');
-      // Aquí podrías setear una variable para mostrar un alert de Bootstrap en el HTML
-    }
-  }
+    this.loginService
+    .obtenerUsuarios()
+    .subscribe((usuarios:any)=>{
+
+      const encontrado =
+        usuarios.find((u:any)=>
+          u.documento === usuario &&
+          u.contrasena === clave
+        );
+
+      if(encontrado){
+        this.mensaje='';
+        this.router.navigate(
+          ['/reportes']
+        );
+      }else{
+        this.mensaje='Usuario o contraseña incorrectos';
+        this.cdr.detectChanges();
+      }
+    });
+
+}
 
   validarCredenciales(usuario: string, clave: string): boolean {
-      if (usuario === 'admin' && clave === 'admin123') {
-        return true;
-      }
-      return false;
+    if (usuario === 'admin' && clave === 'admin123') {
+      return true;
+    }
+    return false;
   }
-
 
 }
