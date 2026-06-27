@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useCarrito } from '../hooks/CarritoContext';
 
 type Categoria = {
   id_categoria: number;
@@ -14,6 +15,7 @@ type Producto = {
 };
 
 function Tienda() {
+  const { agregarProducto } = useCarrito();
   const categorias: Categoria[] = [
     { id_categoria: 1, nombre: 'Abarrotes' },
     { id_categoria: 2, nombre: 'Bebidas' },
@@ -92,9 +94,15 @@ function Tienda() {
       return 0;
     });
 
-  const agregarAlCarrito = (producto: Producto) => {
-    alert(`${producto.nombre} agregado al carrito`);
-  };
+ const agregarAlCarrito = (producto: Producto) => {
+  agregarProducto({
+    idProducto: producto.id_producto,
+    nombre: producto.nombre,
+    precio: producto.precio,
+  });
+
+  alert(`${producto.nombre} agregado al carrito`);
+};
 
   return (
     <div className="container-fluid mt-4">
