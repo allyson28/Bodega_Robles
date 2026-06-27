@@ -1,8 +1,13 @@
+import NavbarCliente from './components/NavbarCliente';
+import Footer from './components/Footer';
+import AppRoutes from './routes/AppRoutes';
+
 function App() {
   return (
     <>
-      <h1>Bienvenido a Bodega Robles</h1>
-      <p>Proyecto desarrollado con React.</p>
+      <NavbarCliente />
+      <AppRoutes />
+      <Footer />
     </>
   );
 }
