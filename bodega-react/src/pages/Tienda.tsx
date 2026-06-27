@@ -66,6 +66,7 @@ function Tienda() {
   const [precioMin, setPrecioMin] = useState('');
   const [precioMax, setPrecioMax] = useState('');
   const [ordenar, setOrdenar] = useState('');
+  const [mensaje, setMensaje] = useState('');
 
   const productosFiltrados = productos
     .filter((producto) =>
@@ -101,7 +102,11 @@ function Tienda() {
     precio: producto.precio,
   });
 
-  alert(`${producto.nombre} agregado al carrito`);
+  setMensaje(`${producto.nombre} agregado al carrito`);
+
+  setTimeout(() => {
+    setMensaje('');
+  }, 2500);
 };
 
   return (
@@ -185,7 +190,11 @@ function Tienda() {
         {/* PRODUCTOS */}
         <section className="col-md-9">
           <h3 className="fw-bold mb-3">Productos disponibles</h3>
-
+            {mensaje && (
+              <div className="alert alert-success shadow-sm">
+                ✅ {mensaje}
+              </div>
+            )}
           <div className="row g-4">
             {productosFiltrados.length > 0 ? (
               productosFiltrados.map((producto) => (
