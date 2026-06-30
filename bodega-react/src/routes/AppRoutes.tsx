@@ -6,7 +6,6 @@ import HistorialCompras from '../pages/HistorialCompras';
 import Checkout from '../pages/Checkout';
 import PagoExitoso from '../pages/PagoExitoso';
 import DetallePedido from '../pages/DetallePedido';
-import DetalleHistorial from '../pages/DetalleHistorial';
 
 function AppRoutes() {
   return (
@@ -18,7 +17,6 @@ function AppRoutes() {
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/pago-exitoso" element={<PagoExitoso />} />
       <Route path="/detalle-pedido" element={<DetallePedido />} />
-      <Route path="/detalle-historial" element={<DetalleHistorial />} />
     </Routes>
   );
 }

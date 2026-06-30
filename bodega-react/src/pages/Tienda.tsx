@@ -12,10 +12,12 @@ type Producto = {
   id_categoria: number;
   categoria: string;
   precio: number;
+  imagen: string;
 };
 
 function Tienda() {
   const { agregarProducto } = useCarrito();
+
   const categorias: Categoria[] = [
     { id_categoria: 1, nombre: 'Abarrotes' },
     { id_categoria: 2, nombre: 'Bebidas' },
@@ -30,6 +32,7 @@ function Tienda() {
       id_categoria: 1,
       categoria: 'Abarrotes',
       precio: 4.5,
+      imagen: '/imagenes/1.jpeg',
     },
     {
       id_producto: 2,
@@ -37,13 +40,15 @@ function Tienda() {
       id_categoria: 1,
       categoria: 'Abarrotes',
       precio: 9.8,
+      imagen: '/imagenes/3.jpeg',
     },
     {
       id_producto: 3,
       nombre: 'Gaseosa Inca Kola',
       id_categoria: 2,
       categoria: 'Bebidas',
-      precio: 3.5,
+      precio: 10,
+      imagen: '/imagenes/inka.jpg',
     },
     {
       id_producto: 4,
@@ -51,6 +56,7 @@ function Tienda() {
       id_categoria: 3,
       categoria: 'Limpieza',
       precio: 12.9,
+      imagen: '/imagenes/11.jpg',
     },
     {
       id_producto: 5,
@@ -58,6 +64,7 @@ function Tienda() {
       id_categoria: 4,
       categoria: 'Snacks',
       precio: 2.5,
+      imagen: '/imagenes/12.jpg',
     },
   ];
 
@@ -95,19 +102,19 @@ function Tienda() {
       return 0;
     });
 
- const agregarAlCarrito = (producto: Producto) => {
-  agregarProducto({
-    idProducto: producto.id_producto,
-    nombre: producto.nombre,
-    precio: producto.precio,
-  });
+  const agregarAlCarrito = (producto: Producto) => {
+    agregarProducto({
+      idProducto: producto.id_producto,
+      nombre: producto.nombre,
+      precio: producto.precio,
+    });
 
-  setMensaje(`${producto.nombre} agregado al carrito`);
+    setMensaje(`${producto.nombre} agregado al carrito`);
 
-  setTimeout(() => {
-    setMensaje('');
-  }, 2500);
-};
+    setTimeout(() => {
+      setMensaje('');
+    }, 2500);
+  };
 
   return (
     <div className="container-fluid mt-4">
@@ -190,11 +197,13 @@ function Tienda() {
         {/* PRODUCTOS */}
         <section className="col-md-9">
           <h3 className="fw-bold mb-3">Productos disponibles</h3>
-            {mensaje && (
-              <div className="alert alert-success shadow-sm">
-                ✅ {mensaje}
-              </div>
-            )}
+
+          {mensaje && (
+            <div className="alert alert-success shadow-sm">
+              ✅ {mensaje}
+            </div>
+          )}
+
           <div className="row g-4">
             {productosFiltrados.length > 0 ? (
               productosFiltrados.map((producto) => (
@@ -202,7 +211,7 @@ function Tienda() {
                   <div className="card shadow-sm h-100">
 
                     <img
-                      src="/imagenes/2.jpeg"
+                      src={producto.imagen}
                       className="card-img-top"
                       style={{
                         height: '200px',
