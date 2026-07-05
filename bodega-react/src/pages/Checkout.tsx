@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCarrito } from '../hooks/CarritoContext';
+import { crearPedido } from '../services/pedidoService';
 
 function Checkout() {
   const { carrito, total, vaciarCarrito } = useCarrito();
@@ -8,21 +9,27 @@ function Checkout() {
 
   const [metodoPago, setMetodoPago] = useState('');
 
-  const finalizarCompra = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const finalizarCompra = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    if (carrito.length === 0) {
-      alert('No hay productos en el carrito');
-      return;
-    }
+  if (carrito.length === 0) {
+    alert('No hay productos en el carrito');
+    return;
+  }
 
-    if (metodoPago === '') {
-      alert('Seleccione un método de pago');
-      return;
-    }
+  if (metodoPago === '') {
+    alert('Seleccione un método de pago');
+    return;
+  }
+
+  try {
+    const respuestaPedido = await crearPedido({
+      carrito,
+      metodoPago,
+    });
 
     const pedidoFinalizado = {
-      id: Date.now(),
+      id: respuestaPedido.data?.id || Date.now(),
       fecha: new Date().toLocaleString('es-PE'),
       metodoPago,
       productos: carrito,
@@ -34,7 +41,9 @@ function Checkout() {
       JSON.stringify(pedidoFinalizado)
     );
 
-    const historialGuardado = localStorage.getItem('historial_compras_bodega_robles');
+    const historialGuardado = localStorage.getItem(
+      'historial_compras_bodega_robles'
+    );
 
     const historial = historialGuardado
       ? JSON.parse(historialGuardado)
@@ -52,7 +61,16 @@ function Checkout() {
 
     vaciarCarrito();
     navigate('/pago-exitoso');
-  };
+  } catch (error) {
+    console.error('Error al registrar pedido:', error);
+
+    if (error instanceof Error) {
+      alert(error.message);
+    } else {
+      alert('No se pudo registrar el pedido en la base de datos.');
+    }
+  }
+};
 
   return (
     <div className="container mt-4 mb-5">
