@@ -1,15 +1,22 @@
 const API_URL = 'http://localhost:3000/api';
 
 export type ProductoApi = {
-  id_producto: number;
-  id_categoria: number;
+  id: number;
   sku: string;
   nombre: string;
   descripcion: string;
-  marca: string;
+  categoria_id: number;
   unidad_medida: string;
-  Categorium?: {
-    id_categoria: number;
+  stock_minimo: number;
+  stock_maximo: number;
+  stock_actual: number;
+  estado: string;
+  precio_venta: string;
+  url_imagen: string;
+  createdAt: string;
+  updatedAt: string;
+  Categoria?: {
+    id: number;
     nombre: string;
   };
 };

@@ -3,6 +3,8 @@ import { obtenerProductos } from '../services/productoService';
 import type { ProductoApi } from '../services/productoService';
 import { useCarrito } from '../hooks/CarritoContext';
 
+const API_BASE_URL = 'http://localhost:3000';
+
 function Tienda() {
   const { agregarProducto } = useCarrito();
 
@@ -12,6 +14,7 @@ function Tienda() {
 
   const [buscar, setBuscar] = useState('');
   const [categoria, setCategoria] = useState('0');
+  const [ordenar, setOrdenar] = useState('');
 
   useEffect(() => {
     obtenerProductos()
@@ -27,12 +30,10 @@ function Tienda() {
   }, []);
 
   const categorias = productos
-    .map((producto) => producto.Categorium)
+    .map((producto) => producto.Categoria)
     .filter((categoria, index, array) =>
       categoria &&
-      array.findIndex(
-        (item) => item?.id_categoria === categoria.id_categoria
-      ) === index
+      array.findIndex((item) => item?.id === categoria.id) === index
     );
 
   const productosFiltrados = productos
@@ -42,14 +43,33 @@ function Tienda() {
     .filter((producto) =>
       categoria === '0'
         ? true
-        : producto.id_categoria === Number(categoria)
-    );
+        : producto.categoria_id === Number(categoria)
+    )
+    .sort((a, b) => {
+      if (ordenar === 'precio_asc') {
+        return Number(a.precio_venta) - Number(b.precio_venta);
+      }
+
+      if (ordenar === 'precio_desc') {
+        return Number(b.precio_venta) - Number(a.precio_venta);
+      }
+
+      if (ordenar === 'nombre_asc') {
+        return a.nombre.localeCompare(b.nombre);
+      }
+
+      if (ordenar === 'nombre_desc') {
+        return b.nombre.localeCompare(a.nombre);
+      }
+
+      return 0;
+    });
 
   const agregarAlCarrito = (producto: ProductoApi) => {
     agregarProducto({
-      idProducto: producto.id_producto,
+      idProducto: producto.id,
       nombre: producto.nombre,
-      precio: 0,
+      precio: Number(producto.precio_venta),
     });
 
     setMensaje(`${producto.nombre} agregado al carrito`);
@@ -100,12 +120,25 @@ function Tienda() {
 
                 {categorias.map((cat) => (
                   <option
-                    key={cat?.id_categoria}
-                    value={cat?.id_categoria}
+                    key={cat?.id}
+                    value={cat?.id}
                   >
                     {cat?.nombre}
                   </option>
                 ))}
+              </select>
+
+              <label className="form-label">Ordenar por:</label>
+              <select
+                className="form-select mb-3"
+                value={ordenar}
+                onChange={(e) => setOrdenar(e.target.value)}
+              >
+                <option value="">Sin orden</option>
+                <option value="precio_asc">Precio: menor a mayor</option>
+                <option value="precio_desc">Precio: mayor a menor</option>
+                <option value="nombre_asc">Nombre A-Z</option>
+                <option value="nombre_desc">Nombre Z-A</option>
               </select>
 
               <button
@@ -114,6 +147,7 @@ function Tienda() {
                 onClick={() => {
                   setBuscar('');
                   setCategoria('0');
+                  setOrdenar('');
                 }}
               >
                 Limpiar filtros
@@ -139,28 +173,51 @@ function Tienda() {
               productosFiltrados.map((producto) => (
                 <div
                   className="col-md-4"
-                  key={producto.id_producto}
+                  key={producto.id}
                 >
                   <div className="card shadow-sm h-100">
+
+                    <img
+                      src={`${API_BASE_URL}${producto.url_imagen}`}
+                      className="card-img-top"
+                      style={{
+                        height: '180px',
+                        objectFit: 'contain',
+                        padding: '15px',
+                      }}
+                      alt={producto.nombre}
+                      onError={(e) => {
+                        e.currentTarget.src = '/imagenes/productos/default.jpg';
+                      }}
+                    />
+
                     <div className="card-body">
                       <h5 className="card-title">
                         {producto.nombre}
                       </h5>
 
                       <p className="text-muted small mb-2">
-                        {producto.Categorium?.nombre}
+                        {producto.Categoria?.nombre}
                       </p>
 
                       <p className="mb-1">
-                        <strong>Marca:</strong> {producto.marca}
+                        <strong>SKU:</strong> {producto.sku}
                       </p>
 
                       <p className="mb-1">
                         <strong>Unidad:</strong> {producto.unidad_medida}
                       </p>
 
+                      <p className="mb-1">
+                        <strong>Stock:</strong> {producto.stock_actual}
+                      </p>
+
                       <p className="small text-muted mt-2">
                         {producto.descripcion}
+                      </p>
+
+                      <p className="text-success fs-5 fw-bold">
+                        S/ {Number(producto.precio_venta).toFixed(2)}
                       </p>
                     </div>
 
@@ -168,8 +225,11 @@ function Tienda() {
                       <button
                         className="btn btn-success w-100"
                         onClick={() => agregarAlCarrito(producto)}
+                        disabled={producto.stock_actual <= 0}
                       >
-                        Agregar al Carrito
+                        {producto.stock_actual > 0
+                          ? 'Agregar al Carrito'
+                          : 'Sin stock'}
                       </button>
                     </div>
                   </div>
