@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { obtenerProductos } from '../services/productoService';
 import type { ProductoApi } from '../services/productoService';
 import { useCarrito } from '../hooks/CarritoContext';
+import '../styles/Tienda.css';
 
 const API_BASE_URL = 'http://localhost:3000';
 
@@ -90,148 +91,140 @@ function Tienda() {
   }
 
   return (
-    <div className="container-fluid mt-4">
-      <div className="row">
+  <div className="tienda-page">
+    <div className="tienda-topbar">
+      Encuentra tus productos favoritos de forma rápida y sencilla 🛒
+    </div>
 
+    <div className="tienda-wrapper">
+      <div className="tienda-layout">
+        
         {/* FILTROS */}
-        <aside className="col-md-3">
-          <div className="card shadow-sm">
-            <div className="card-header bg-success text-white fw-bold">
-              Filtros
-            </div>
+        <aside className="filtros-card">
+          <div className="card-header">Filtros</div>
 
-            <div className="card-body">
-              <label className="form-label">Buscar:</label>
-              <input
-                type="text"
-                className="form-control mb-3"
-                placeholder="Buscar producto..."
-                value={buscar}
-                onChange={(e) => setBuscar(e.target.value)}
-              />
+          <div className="card-body">
+            <label className="form-label">Buscar:</label>
+            <input
+              type="text"
+              className="form-control mb-3"
+              placeholder="Buscar producto..."
+              value={buscar}
+              onChange={(e) => setBuscar(e.target.value)}
+            />
 
-              <label className="form-label">Categoría:</label>
-              <select
-                className="form-select mb-3"
-                value={categoria}
-                onChange={(e) => setCategoria(e.target.value)}
-              >
-                <option value="0">Todas</option>
+            <label className="form-label">Categoría:</label>
+            <select
+              className="form-select mb-3"
+              value={categoria}
+              onChange={(e) => setCategoria(e.target.value)}
+            >
+              <option value="0">Todas</option>
 
-                {categorias.map((cat) => (
-                  <option
-                    key={cat?.id}
-                    value={cat?.id}
-                  >
-                    {cat?.nombre}
-                  </option>
-                ))}
-              </select>
+              {categorias.map((cat) => (
+                <option key={cat?.id} value={cat?.id}>
+                  {cat?.nombre}
+                </option>
+              ))}
+            </select>
 
-              <label className="form-label">Ordenar por:</label>
-              <select
-                className="form-select mb-3"
-                value={ordenar}
-                onChange={(e) => setOrdenar(e.target.value)}
-              >
-                <option value="">Sin orden</option>
-                <option value="precio_asc">Precio: menor a mayor</option>
-                <option value="precio_desc">Precio: mayor a menor</option>
-                <option value="nombre_asc">Nombre A-Z</option>
-                <option value="nombre_desc">Nombre Z-A</option>
-              </select>
+            <label className="form-label">Ordenar por:</label>
+            <select
+              className="form-select mb-3"
+              value={ordenar}
+              onChange={(e) => setOrdenar(e.target.value)}
+            >
+              <option value="">Sin orden</option>
+              <option value="precio_asc">Precio: menor a mayor</option>
+              <option value="precio_desc">Precio: mayor a menor</option>
+              <option value="nombre_asc">Nombre A-Z</option>
+              <option value="nombre_desc">Nombre Z-A</option>
+            </select>
 
-              <button
-                type="button"
-                className="btn btn-success w-100"
-                onClick={() => {
-                  setBuscar('');
-                  setCategoria('0');
-                  setOrdenar('');
-                }}
-              >
-                Limpiar filtros
-              </button>
-            </div>
+            <button
+              type="button"
+              className="btn btn-success w-100"
+              onClick={() => {
+                setBuscar('');
+                setCategoria('0');
+                setOrdenar('');
+              }}
+            >
+              Limpiar filtros
+            </button>
           </div>
         </aside>
 
         {/* PRODUCTOS */}
-        <section className="col-md-9">
-          <h3 className="fw-bold mb-3">
-            Productos disponibles
-          </h3>
+        <section>
+          <div className="productos-header">
+            <div>
+              <h2 className="productos-title">Productos disponibles</h2>
+              <p className="productos-subtitle">
+                Explora nuestro catálogo y agrega productos al carrito
+              </p>
+            </div>
+          </div>
 
           {mensaje && (
-            <div className="alert alert-success shadow-sm">
+            <div className="alert alert-success mensaje-compra">
               ✅ {mensaje}
             </div>
           )}
 
-          <div className="row g-4">
+          <div className="productos-grid">
             {productosFiltrados.length > 0 ? (
               productosFiltrados.map((producto) => (
-                <div
-                  className="col-md-4"
-                  key={producto.id}
-                >
-                  <div className="card shadow-sm h-100">
-
+                <div className="producto-card" key={producto.id}>
+                  <div className="producto-img-wrap">
                     <img
                       src={`${API_BASE_URL}${producto.url_imagen}`}
-                      className="card-img-top"
-                      style={{
-                        height: '180px',
-                        objectFit: 'contain',
-                        padding: '15px',
-                      }}
+                      className="producto-img"
                       alt={producto.nombre}
                       onError={(e) => {
                         e.currentTarget.src = '/imagenes/productos/default.jpg';
                       }}
                     />
+                  </div>
 
-                    <div className="card-body">
-                      <h5 className="card-title">
-                        {producto.nombre}
-                      </h5>
+                  <div className="producto-body">
+                    <div className="producto-nombre">{producto.nombre}</div>
 
-                      <p className="text-muted small mb-2">
-                        {producto.Categoria?.nombre}
-                      </p>
-
-                      <p className="mb-1">
-                        <strong>SKU:</strong> {producto.sku}
-                      </p>
-
-                      <p className="mb-1">
-                        <strong>Unidad:</strong> {producto.unidad_medida}
-                      </p>
-
-                      <p className="mb-1">
-                        <strong>Stock:</strong> {producto.stock_actual}
-                      </p>
-
-                      <p className="small text-muted mt-2">
-                        {producto.descripcion}
-                      </p>
-
-                      <p className="text-success fs-5 fw-bold">
-                        S/ {Number(producto.precio_venta).toFixed(2)}
-                      </p>
+                    <div className="producto-categoria">
+                      {producto.Categoria?.nombre}
                     </div>
 
-                    <div className="card-footer bg-white">
-                      <button
-                        className="btn btn-success w-100"
-                        onClick={() => agregarAlCarrito(producto)}
-                        disabled={producto.stock_actual <= 0}
-                      >
-                        {producto.stock_actual > 0
-                          ? 'Agregar al Carrito'
-                          : 'Sin stock'}
-                      </button>
+                    <div className="producto-meta">
+                      <strong>SKU:</strong> {producto.sku}
                     </div>
+
+                    <div className="producto-meta">
+                      <strong>Unidad:</strong> {producto.unidad_medida}
+                    </div>
+
+                    <div className="producto-meta">
+                      <strong>Stock:</strong> {producto.stock_actual}
+                    </div>
+
+                    <div className="producto-descripcion">
+                      {producto.descripcion}
+                    </div>
+
+                    <div className="producto-precio">
+                      S/ {Number(producto.precio_venta).toFixed(2)}
+                    </div>
+                  </div>
+
+                  <div className="producto-footer">
+                    <button
+                      className="btn btn-success"
+                      onClick={() => agregarAlCarrito(producto)}
+                      disabled={producto.stock_actual <= 0}
+                    >
+                      {producto.stock_actual > 0
+                        ? 'Agregar al Carrito'
+                        : 'Sin stock'}
+                    </button>
                   </div>
                 </div>
               ))
@@ -242,10 +235,10 @@ function Tienda() {
             )}
           </div>
         </section>
-
       </div>
     </div>
-  );
+  </div>
+);
 }
 
 export default Tienda;
