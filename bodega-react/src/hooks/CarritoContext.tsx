@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 
 export type ProductoCarrito = {
@@ -19,8 +19,27 @@ type CarritoContextType = {
 
 const CarritoContext = createContext<CarritoContextType | undefined>(undefined);
 
+const CARRITO_STORAGE_KEY = 'carrito_bodega_robles';
+
 export function CarritoProvider({ children }: { children: ReactNode }) {
-  const [carrito, setCarrito] = useState<ProductoCarrito[]>([]);
+  const [carrito, setCarrito] = useState<ProductoCarrito[]>(() => {
+    const carritoGuardado = localStorage.getItem(CARRITO_STORAGE_KEY);
+
+    if (carritoGuardado) {
+      try {
+        return JSON.parse(carritoGuardado);
+      } catch (error) {
+        console.error('Error al leer el carrito:', error);
+        return [];
+      }
+    }
+
+    return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(CARRITO_STORAGE_KEY, JSON.stringify(carrito));
+  }, [carrito]);
 
   const agregarProducto = (producto: Omit<ProductoCarrito, 'cantidad'>) => {
     const productoExiste = carrito.find(
@@ -59,13 +78,16 @@ export function CarritoProvider({ children }: { children: ReactNode }) {
   };
 
   const eliminarProducto = (idProducto: number) => {
-    setCarrito(
-      carrito.filter((item) => item.idProducto !== idProducto)
+    const carritoActualizado = carrito.filter(
+      (item) => item.idProducto !== idProducto
     );
+
+    setCarrito(carritoActualizado);
   };
 
   const vaciarCarrito = () => {
     setCarrito([]);
+    localStorage.removeItem(CARRITO_STORAGE_KEY);
   };
 
   const total = carrito.reduce(

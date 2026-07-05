@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 type ProductoHistorial = {
+  idProducto: number;
   nombre: string;
   cantidad: number;
   precio: number;
@@ -9,47 +11,39 @@ type ProductoHistorial = {
 type Compra = {
   id: number;
   fecha: string;
-  metodo: string;
+  metodoPago: string;
   total: number;
   productos: ProductoHistorial[];
 };
 
 function HistorialCompras() {
+  const [historial, setHistorial] = useState<Compra[]>([]);
   const [compraSeleccionada, setCompraSeleccionada] = useState<Compra | null>(null);
 
-  const historial: Compra[] = [
-    {
-      id: 1,
-      fecha: '2026-06-28',
-      metodo: 'Yape',
-      total: 18.80,
-      productos: [
-        {
-          nombre: 'Arroz Costeño',
-          cantidad: 2,
-          precio: 4.50,
-        },
-        {
-          nombre: 'Aceite Primor',
-          cantidad: 1,
-          precio: 9.80,
-        },
-      ],
-    },
-    {
-      id: 2,
-      fecha: '2026-06-29',
-      metodo: 'Tarjeta',
-      total: 10.50,
-      productos: [
-        {
-          nombre: 'Gaseosa Inca Kola',
-          cantidad: 3,
-          precio: 3.50,
-        },
-      ],
-    },
-  ];
+  useEffect(() => {
+    const historialGuardado = localStorage.getItem('historial_compras_bodega_robles');
+
+    if (historialGuardado) {
+      try {
+        setHistorial(JSON.parse(historialGuardado));
+      } catch (error) {
+        console.error('Error al leer el historial de compras:', error);
+        setHistorial([]);
+      }
+    }
+  }, []);
+
+  const limpiarHistorial = () => {
+    const confirmar = window.confirm(
+      '¿Seguro que deseas eliminar todo el historial de compras?'
+    );
+
+    if (!confirmar) return;
+
+    localStorage.removeItem('historial_compras_bodega_robles');
+    setHistorial([]);
+    setCompraSeleccionada(null);
+  };
 
   return (
     <>
@@ -58,6 +52,17 @@ function HistorialCompras() {
       </h2>
 
       <div className="container mt-4">
+        {historial.length > 0 ? (
+          <div className="text-end mb-3">
+            <button
+              className="btn btn-outline-danger btn-sm"
+              onClick={limpiarHistorial}
+            >
+              Limpiar historial
+            </button>
+          </div>
+        ) : null}
+
         <table className="table table-bordered table-hover">
           <thead className="table-success">
             <tr>
@@ -74,9 +79,13 @@ function HistorialCompras() {
               historial.map((compra, index) => (
                 <tr key={compra.id}>
                   <td>{index + 1}</td>
+
                   <td>{compra.fecha}</td>
-                  <td>{compra.metodo}</td>
+
+                  <td>{compra.metodoPago.toUpperCase()}</td>
+
                   <td>S/ {compra.total.toFixed(2)}</td>
+
                   <td>
                     <button
                       className="btn btn-primary btn-sm"
@@ -97,8 +106,16 @@ function HistorialCompras() {
           </tbody>
         </table>
 
+        {historial.length === 0 && (
+          <div className="text-center mt-3">
+            <Link to="/tienda" className="btn btn-success">
+              Ir a la tienda
+            </Link>
+          </div>
+        )}
+
         {compraSeleccionada && (
-          <div className="card shadow-sm mt-4">
+          <div className="card shadow-sm mt-4 mb-5">
             <div className="card-header bg-success text-white fw-bold">
               Detalle de compra #{compraSeleccionada.id}
             </div>
@@ -109,7 +126,8 @@ function HistorialCompras() {
               </p>
 
               <p>
-                <strong>Método de pago:</strong> {compraSeleccionada.metodo}
+                <strong>Método de pago:</strong>{' '}
+                {compraSeleccionada.metodoPago.toUpperCase()}
               </p>
 
               <table className="table table-sm table-striped">
@@ -123,11 +141,14 @@ function HistorialCompras() {
                 </thead>
 
                 <tbody>
-                  {compraSeleccionada.productos.map((producto, index) => (
-                    <tr key={index}>
+                  {compraSeleccionada.productos.map((producto) => (
+                    <tr key={producto.idProducto}>
                       <td>{producto.nombre}</td>
+
                       <td>{producto.cantidad}</td>
+
                       <td>S/ {producto.precio.toFixed(2)}</td>
+
                       <td>
                         S/ {(producto.precio * producto.cantidad).toFixed(2)}
                       </td>
