@@ -2,145 +2,187 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCarrito } from '../hooks/CarritoContext';
 import { crearPedido } from '../services/pedidoService';
+import '../styles/Checkout.css';
 
 function Checkout() {
   const { carrito, total, vaciarCarrito } = useCarrito();
   const navigate = useNavigate();
 
   const [metodoPago, setMetodoPago] = useState('');
+  const [procesando, setProcesando] = useState(false);
+
+  const cantidadTotal = carrito.reduce(
+    (acumulador, item) => acumulador + item.cantidad,
+    0
+  );
 
   const finalizarCompra = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (carrito.length === 0) {
-    alert('No hay productos en el carrito');
-    return;
-  }
-
-  if (metodoPago === '') {
-    alert('Seleccione un método de pago');
-    return;
-  }
-
-  try {
-    const respuestaPedido = await crearPedido({
-      carrito,
-      metodoPago,
-    });
-
-    const pedidoFinalizado = {
-      id: respuestaPedido.data?.id || Date.now(),
-      fecha: new Date().toLocaleString('es-PE'),
-      metodoPago,
-      productos: carrito,
-      total,
-    };
-
-    localStorage.setItem(
-      'ultimo_pedido_bodega_robles',
-      JSON.stringify(pedidoFinalizado)
-    );
-
-    const historialGuardado = localStorage.getItem(
-      'historial_compras_bodega_robles'
-    );
-
-    const historial = historialGuardado
-      ? JSON.parse(historialGuardado)
-      : [];
-
-    const historialActualizado = [
-      pedidoFinalizado,
-      ...historial,
-    ];
-
-    localStorage.setItem(
-      'historial_compras_bodega_robles',
-      JSON.stringify(historialActualizado)
-    );
-
-    vaciarCarrito();
-    navigate('/pago-exitoso');
-  } catch (error) {
-    console.error('Error al registrar pedido:', error);
-
-    if (error instanceof Error) {
-      alert(error.message);
-    } else {
-      alert('No se pudo registrar el pedido en la base de datos.');
+    if (carrito.length === 0) {
+      alert('No hay productos en el carrito');
+      return;
     }
-  }
-};
+
+    if (metodoPago === '') {
+      alert('Seleccione un método de pago');
+      return;
+    }
+
+    try {
+      setProcesando(true);
+
+      const respuestaPedido = await crearPedido({
+        carrito,
+        metodoPago,
+      });
+
+      const pedidoFinalizado = {
+        id: respuestaPedido.data?.id || Date.now(),
+        fecha: new Date().toLocaleString('es-PE'),
+        metodoPago,
+        productos: carrito,
+        total,
+      };
+
+      localStorage.setItem(
+        'ultimo_pedido_bodega_robles',
+        JSON.stringify(pedidoFinalizado)
+      );
+
+      const historialGuardado = localStorage.getItem(
+        'historial_compras_bodega_robles'
+      );
+
+      const historial = historialGuardado
+        ? JSON.parse(historialGuardado)
+        : [];
+
+      const historialActualizado = [
+        pedidoFinalizado,
+        ...historial,
+      ];
+
+      localStorage.setItem(
+        'historial_compras_bodega_robles',
+        JSON.stringify(historialActualizado)
+      );
+
+      vaciarCarrito();
+      navigate('/pago-exitoso');
+    } catch (error) {
+      console.error('Error al registrar pedido:', error);
+
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert('No se pudo registrar el pedido en la base de datos.');
+      }
+    } finally {
+      setProcesando(false);
+    }
+  };
 
   return (
-    <div className="container mt-4 mb-5">
-      <h2 className="fw-bold mb-4 text-center">
-        💳 Checkout - Finalizar Compra
-      </h2>
+    <div className="checkout-page">
+      <div className="checkout-wrapper">
+        <div className="checkout-header">
+          <h2 className="checkout-title">
+            Checkout - Finalizar Compra
+          </h2>
 
-      {carrito.length === 0 ? (
-        <div className="alert alert-warning text-center">
-          <p className="mb-3">
-            No hay productos en el carrito.
+          <p className="checkout-subtitle">
+            Confirma tus productos y selecciona un método de pago.
           </p>
-
-          <Link to="/tienda" className="btn btn-success">
-            Volver a la tienda
-          </Link>
         </div>
-      ) : (
-        <div className="row g-4">
 
-          {/* RESUMEN DE COMPRA */}
-          <div className="col-md-6">
-            <div className="card shadow-sm">
-              <div className="card-header bg-success text-white fw-bold">
-                🛍️ Resumen de la compra
+        {carrito.length === 0 ? (
+          <div className="checkout-empty">
+            <div className="checkout-empty-icon">🛒</div>
+
+            <h4>No hay productos en el carrito</h4>
+
+            <p>
+              Agrega productos desde la tienda para poder finalizar una compra.
+            </p>
+
+            <Link to="/tienda" className="btn btn-success">
+              Volver a la tienda
+            </Link>
+          </div>
+        ) : (
+          <div className="checkout-layout">
+            {/* RESUMEN */}
+            <section className="checkout-card">
+              <div className="checkout-card-header">
+                <h4>Resumen de la compra</h4>
+                <p>{cantidadTotal} producto(s) seleccionado(s)</p>
               </div>
 
-              <ul className="list-group list-group-flush">
+              <div className="checkout-list">
                 {carrito.map((item) => (
-                  <li
-                    key={item.idProducto}
-                    className="list-group-item"
-                  >
-                    <div className="d-flex justify-content-between">
-                      <span>
-                        {item.nombre} (x{item.cantidad})
-                      </span>
-
-                      <span className="fw-bold">
-                        S/ {(item.precio * item.cantidad).toFixed(2)}
-                      </span>
+                  <article className="checkout-item" key={item.idProducto}>
+                    <div className="checkout-item-img">
+                      <img
+                        src={item.imagen || '/imagenes/productos/default.jpg'}
+                        alt={item.nombre}
+                        onError={(e) => {
+                          e.currentTarget.src = '/imagenes/productos/default.jpg';
+                        }}
+                      />
                     </div>
 
-                    <small className="text-muted">
-                      Precio unitario: S/ {item.precio.toFixed(2)}
-                    </small>
-                  </li>
+                    <div className="checkout-item-info">
+                      <h5>{item.nombre}</h5>
+                      <p>
+                        Cantidad: {item.cantidad} | Precio unitario: S/{' '}
+                        {item.precio.toFixed(2)}
+                      </p>
+                    </div>
+
+                    <div className="checkout-item-price">
+                      S/ {(item.precio * item.cantidad).toFixed(2)}
+                    </div>
+                  </article>
                 ))}
-              </ul>
-
-              <div className="p-3 text-end">
-                <h4>
-                  Total a pagar:{' '}
-                  <span className="text-success fw-bold">
-                    S/ {total.toFixed(2)}
-                  </span>
-                </h4>
               </div>
-            </div>
-          </div>
 
-          {/* MÉTODOS DE PAGO */}
-          <div className="col-md-6">
-            <form onSubmit={finalizarCompra}>
-              <div className="card shadow-sm">
-                <div className="card-header bg-primary text-white fw-bold">
-                  Seleccione método de pago
+              <div className="checkout-total-box">
+                <div className="checkout-total-line">
+                  <span>Productos</span>
+                  <strong>{cantidadTotal}</strong>
                 </div>
 
-                <div className="card-body">
+                <div className="checkout-total-line">
+                  <span>Subtotal</span>
+                  <strong>S/ {total.toFixed(2)}</strong>
+                </div>
+
+                <div className="checkout-total-line">
+                  <span>Descuento</span>
+                  <strong>S/ 0.00</strong>
+                </div>
+
+                <div className="checkout-total-final">
+                  <span>Total a pagar</span>
+                  <span>S/ {total.toFixed(2)}</span>
+                </div>
+              </div>
+            </section>
+
+            {/* MÉTODO DE PAGO */}
+            <aside className="checkout-payment-card">
+              <div className="checkout-payment-header">
+                <h4>Método de pago</h4>
+                <p>Selecciona cómo deseas pagar tu pedido.</p>
+              </div>
+
+              <form onSubmit={finalizarCompra}>
+                <div className="checkout-payment-body">
+                  <label className="form-label">
+                    Seleccione método de pago
+                  </label>
+
                   <select
                     name="metodoPago"
                     className="form-select mb-3"
@@ -156,10 +198,9 @@ function Checkout() {
                     <option value="plin">Plin</option>
                   </select>
 
-                  {/* FORM TARJETA */}
                   {metodoPago === 'tarjeta' && (
-                    <div className="mt-3">
-                      <h6 className="fw-bold">Datos de Tarjeta</h6>
+                    <div className="payment-option-box">
+                      <h5>Datos de Tarjeta</h5>
 
                       <input
                         type="text"
@@ -198,22 +239,20 @@ function Checkout() {
                         className="form-control mb-2"
                       />
 
-                      <small className="text-muted">
-                        Este formulario es solo una simulación para el proyecto.
-                      </small>
+                      <p className="mb-0">
+                        Este formulario es una simulación para el proyecto.
+                      </p>
                     </div>
                   )}
 
-                  {/* FORM YAPE */}
                   {metodoPago === 'yape' && (
-                    <div className="mt-3">
-                      <h6 className="fw-bold">Pagar con Yape</h6>
-                      <p>Escanea el siguiente QR o ingresa tu número.</p>
+                    <div className="payment-option-box">
+                      <h5>Pagar con Yape</h5>
+                      <p>Escanea el QR o ingresa tu número Yape.</p>
 
                       <img
                         src="/imagenes/qr-yape.png"
-                        className="img-fluid mb-2"
-                        style={{ maxWidth: '180px' }}
+                        className="payment-qr"
                         alt="QR Yape"
                       />
 
@@ -221,21 +260,19 @@ function Checkout() {
                         type="text"
                         name="yapeNum"
                         placeholder="Número Yape"
-                        className="form-control mb-2"
+                        className="form-control"
                       />
                     </div>
                   )}
 
-                  {/* FORM PLIN */}
                   {metodoPago === 'plin' && (
-                    <div className="mt-3">
-                      <h6 className="fw-bold">Pagar con Plin</h6>
-                      <p>Escanea el QR o ingresa tu número.</p>
+                    <div className="payment-option-box">
+                      <h5>Pagar con Plin</h5>
+                      <p>Escanea el QR o ingresa tu número Plin.</p>
 
                       <img
                         src="/imagenes/qr-plin.png"
-                        className="img-fluid mb-2"
-                        style={{ maxWidth: '180px' }}
+                        className="payment-qr"
                         alt="QR Plin"
                       />
 
@@ -243,24 +280,32 @@ function Checkout() {
                         type="text"
                         name="plinNum"
                         placeholder="Número Plin"
-                        className="form-control mb-2"
+                        className="form-control"
                       />
                     </div>
                   )}
 
-                  <button
-                    className="btn btn-success w-100 btn-lg mt-3"
-                    type="submit"
-                  >
-                    Finalizar Compra
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
+                  <div className="checkout-actions">
+                    <button
+                      className="btn-finalizar"
+                      type="submit"
+                      disabled={procesando}
+                    >
+                      {procesando
+                        ? 'Registrando pedido...'
+                        : 'Finalizar Compra'}
+                    </button>
 
-        </div>
-      )}
+                    <Link to="/carrito" className="btn-volver">
+                      Volver al carrito
+                    </Link>
+                  </div>
+                </div>
+              </form>
+            </aside>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
