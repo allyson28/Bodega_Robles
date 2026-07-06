@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCarrito } from '../hooks/CarritoContext';
+import '../styles/Carrito.css';
 
 function Carrito() {
   const {
@@ -10,37 +11,84 @@ function Carrito() {
     total,
   } = useCarrito();
 
+  const cantidadTotal = carrito.reduce(
+    (acumulador, item) => acumulador + item.cantidad,
+    0
+  );
+
   return (
-    <div className="container mt-4">
-      <h3 className="fw-bold mb-3">🛍️ Carrito de Compras</h3>
+    <div className="carrito-page">
+      <div className="carrito-wrapper">
+        <div className="carrito-header">
+          <h2 className="carrito-title">Carrito de Compras</h2>
+          <p className="carrito-subtitle">
+            Revisa tus productos antes de continuar con el pago.
+          </p>
+        </div>
 
-      {carrito.length > 0 ? (
-        <>
-          <table className="table table-striped">
-            <thead className="table-success">
-              <tr>
-                <th>Producto</th>
-                <th>Precio</th>
-                <th>Cant.</th>
-                <th>Subtotal</th>
-                <th></th>
-              </tr>
-            </thead>
+        {carrito.length > 0 ? (
+          <div className="carrito-layout">
+            {/* LISTA DE PRODUCTOS */}
+            <section className="carrito-products-card">
+              <div className="carrito-card-header">
+                <div>
+                  <h4>Productos</h4>
+                  <span>{cantidadTotal} producto(s)</span>
+                </div>
 
-            <tbody>
-              {carrito.map((item) => (
-                <tr key={item.idProducto}>
-                  <td>{item.nombre}</td>
+                <button
+                  className="btn-limpiar"
+                  type="button"
+                  onClick={vaciarCarrito}
+                >
+                  × Vaciar carrito
+                </button>
+              </div>
 
-                  <td>S/ {item.precio.toFixed(2)}</td>
+              <div className="carrito-table-header">
+                <span>Producto</span>
+                <span>Cantidad</span>
+                <span>Precio</span>
+              </div>
 
-                  <td>
-                    <div className="d-flex">
+              <div className="carrito-list">
+                {carrito.map((item) => (
+                  <article className="carrito-item" key={item.idProducto}>
+                    <div className="item-info">
+                      <div className="item-image">
+                        <img
+                          src={item.imagen || '/imagenes/productos/default.jpg'}
+                          alt={item.nombre}
+                          onError={(e) => {
+                            e.currentTarget.src = '/imagenes/productos/default.jpg';
+                          }}
+                        />
+                      </div>
+
+                      <div>
+                        <h5>{item.nombre}</h5>
+                        <p>Precio unitario: S/ {item.precio.toFixed(2)}</p>
+                      </div>
+                    </div>
+
+                    <div className="item-quantity">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          actualizarCantidad(
+                            item.idProducto,
+                            item.cantidad - 1
+                          )
+                        }
+                        disabled={item.cantidad <= 1}
+                      >
+                        −
+                      </button>
+
                       <input
                         type="number"
                         min="1"
                         value={item.cantidad}
-                        className="form-control w-50 me-2"
                         onChange={(e) =>
                           actualizarCantidad(
                             item.idProducto,
@@ -50,51 +98,85 @@ function Carrito() {
                       />
 
                       <button
-                        className="btn btn-primary btn-sm"
                         type="button"
+                        onClick={() =>
+                          actualizarCantidad(
+                            item.idProducto,
+                            item.cantidad + 1
+                          )
+                        }
                       >
-                        OK
+                        +
                       </button>
                     </div>
-                  </td>
 
-                  <td>
-                    S/ {(item.precio * item.cantidad).toFixed(2)}
-                  </td>
+                    <div className="item-price">
+                      <strong>
+                        S/ {(item.precio * item.cantidad).toFixed(2)}
+                      </strong>
 
-                  <td>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => eliminarProducto(item.idProducto)}
-                    >
-                      X
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      <button
+                        className="item-remove"
+                        type="button"
+                        onClick={() => eliminarProducto(item.idProducto)}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
 
-          <div className="text-end">
-            <h4>Total: S/ {total.toFixed(2)}</h4>
+            {/* RESUMEN */}
+            <aside className="carrito-summary-card">
+              <h4>Resumen de compra</h4>
 
-            <button
-              className="btn btn-outline-danger me-2"
-              onClick={vaciarCarrito}
-            >
-              Vaciar
-            </button>
+              <div className="summary-line">
+                <span>Productos</span>
+                <strong>{cantidadTotal}</strong>
+              </div>
 
-            <Link to="/checkout" className="btn btn-success btn-lg">
-              Proceder al Pago
+              <div className="summary-line">
+                <span>Subtotal</span>
+                <strong>S/ {total.toFixed(2)}</strong>
+              </div>
+
+              <div className="summary-line">
+                <span>Descuento</span>
+                <strong>S/ 0.00</strong>
+              </div>
+
+              <div className="summary-total">
+                <span>Total</span>
+                <strong>S/ {total.toFixed(2)}</strong>
+              </div>
+
+              <Link to="/checkout" className="btn-checkout">
+                Proceder al Pago
+              </Link>
+
+              <Link to="/tienda" className="btn-seguir">
+                Seguir comprando
+              </Link>
+            </aside>
+          </div>
+        ) : (
+          <div className="carrito-vacio">
+            <div className="carrito-vacio-icon">🛒</div>
+
+            <h4>Tu carrito está vacío</h4>
+
+            <p>
+              Agrega productos desde la tienda para continuar con tu compra.
+            </p>
+
+            <Link to="/tienda" className="btn btn-success">
+              Ir a la tienda
             </Link>
           </div>
-        </>
-      ) : (
-        <div className="alert alert-warning">
-          El carrito de compras está vacío.
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

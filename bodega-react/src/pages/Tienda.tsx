@@ -67,19 +67,19 @@ function Tienda() {
     });
 
   const agregarAlCarrito = (producto: ProductoApi) => {
-    agregarProducto({
-      idProducto: producto.id,
-      nombre: producto.nombre,
-      precio: Number(producto.precio_venta),
-    });
+  agregarProducto({
+    idProducto: producto.id,
+    nombre: producto.nombre,
+    precio: Number(producto.precio_venta),
+    imagen: `${API_BASE_URL}${producto.url_imagen}`,
+  });
 
-    setMensaje(`${producto.nombre} agregado al carrito`);
+  setMensaje(`${producto.nombre} agregado al carrito`);
 
-    setTimeout(() => {
-      setMensaje('');
-    }, 2500);
-  };
-
+  setTimeout(() => {
+    setMensaje('');
+  }, 2500);
+};
   if (cargando) {
     return (
       <div className="container mt-4">

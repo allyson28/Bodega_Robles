@@ -50,6 +50,17 @@
   }
 }
 
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background-color: #f7f8fa;
+}
+
 #root {
   width: 100%;
   max-width: none;
@@ -62,9 +73,7 @@
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-}
+
 
 h1,
 h2 {

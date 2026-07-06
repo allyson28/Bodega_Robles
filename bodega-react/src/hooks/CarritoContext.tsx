@@ -6,6 +6,7 @@ export type ProductoCarrito = {
   nombre: string;
   precio: number;
   cantidad: number;
+  imagen: string;
 };
 
 type CarritoContextType = {
