@@ -15,6 +15,9 @@ type PedidoFinalizado = {
   fecha: string;
   metodoPago: string;
   productos: ProductoPedido[];
+  subtotal?: number;
+  descuento?: number;
+  cuponAplicado?: string;
   total: number;
 };
 
@@ -43,6 +46,11 @@ function PagoExitoso() {
         0
       )
     : 0;
+
+    const subtotal = pedido?.subtotal ?? pedido?.total ?? 0;
+const descuento = pedido?.descuento ?? 0;
+const totalPagado = pedido?.total ?? 0;
+const cuponAplicado = pedido?.cuponAplicado ?? '';
 
   return (
     <div className="pago-page">
@@ -124,18 +132,20 @@ function PagoExitoso() {
               <div className="pago-summary">
                 <div className="pago-summary-box">
                   <div className="pago-summary-line">
-                    <span>Subtotal</span>
-                    <strong>S/ {pedido.total.toFixed(2)}</strong>
+  <span>Subtotal</span>
+  <strong>S/ {subtotal.toFixed(2)}</strong>
                   </div>
 
                   <div className="pago-summary-line">
-                    <span>Descuento</span>
-                    <strong>S/ 0.00</strong>
+                    <span>
+                      Descuento {cuponAplicado ? `(${cuponAplicado})` : ''}
+                    </span>
+                    <strong>- S/ {descuento.toFixed(2)}</strong>
                   </div>
 
                   <div className="pago-summary-total">
                     <span>Total pagado</span>
-                    <strong>S/ {pedido.total.toFixed(2)}</strong>
+                    <strong>S/ {totalPagado.toFixed(2)}</strong>
                   </div>
                 </div>
               </div>
