@@ -18,9 +18,11 @@ type Compra = {
   productos: ProductoHistorial[];
 };
 
+
 function HistorialCompras() {
   const [historial, setHistorial] = useState<Compra[]>([]);
   const [compraSeleccionada, setCompraSeleccionada] = useState<Compra | null>(null);
+  const [mostrarModalLimpiar, setMostrarModalLimpiar] = useState(false);
 
   useEffect(() => {
     const historialGuardado = localStorage.getItem('historial_compras_bodega_robles');
@@ -36,16 +38,19 @@ function HistorialCompras() {
   }, []);
 
   const limpiarHistorial = () => {
-    const confirmar = window.confirm(
-      '¿Seguro que deseas eliminar todo el historial de compras?'
-    );
+  setMostrarModalLimpiar(true);
+};
 
-    if (!confirmar) return;
+const confirmarLimpiarHistorial = () => {
+  localStorage.removeItem('historial_compras_bodega_robles');
+  setHistorial([]);
+  setCompraSeleccionada(null);
+  setMostrarModalLimpiar(false);
+};
 
-    localStorage.removeItem('historial_compras_bodega_robles');
-    setHistorial([]);
-    setCompraSeleccionada(null);
-  };
+const cancelarLimpiarHistorial = () => {
+  setMostrarModalLimpiar(false);
+};
 
   const cantidadProductosDetalle = compraSeleccionada
     ? compraSeleccionada.productos.reduce(
@@ -219,9 +224,44 @@ function HistorialCompras() {
             </Link>
           </div>
         )}
+        {mostrarModalLimpiar && (
+  <div className="modal-historial-overlay">
+    <div className="modal-historial">
+      <div className="modal-historial-icon">!</div>
+
+      <h3>Limpiar historial</h3>
+
+      <p>
+        ¿Seguro que deseas eliminar todo el historial de compras?
+        Esta acción no se puede deshacer.
+      </p>
+
+      <div className="modal-historial-actions">
+        <button
+          type="button"
+          className="btn-modal-cancelar"
+          onClick={cancelarLimpiarHistorial}
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="button"
+          className="btn-modal-eliminar"
+          onClick={confirmarLimpiarHistorial}
+        >
+          Sí, limpiar
+        </button>
       </div>
     </div>
+  </div>
+)}
+      </div>
+    </div>
+    
+
   );
+
 }
 
 export default HistorialCompras;

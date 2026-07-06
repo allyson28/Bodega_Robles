@@ -311,3 +311,111 @@
     justify-content: center;
   }
 }
+
+.modal-historial-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(17, 24, 39, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.modal-historial {
+  width: 100%;
+  max-width: 430px;
+  background-color: #ffffff;
+  border-radius: 22px;
+  padding: 30px 28px;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+  animation: modalHistorialEntrada 0.2s ease;
+}
+
+.modal-historial-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  background-color: #fff4e5;
+  color: #ee9d07;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 900;
+}
+
+.modal-historial h3 {
+  margin: 0 0 10px;
+  color: #111827;
+  font-size: 1.45rem;
+  font-weight: 900;
+}
+
+.modal-historial p {
+  margin: 0;
+  color: #5f6b7a;
+  line-height: 1.6;
+  font-size: 0.98rem;
+}
+
+.modal-historial-actions {
+  margin-top: 26px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-modal-cancelar,
+.btn-modal-eliminar {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.btn-modal-cancelar {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+.btn-modal-cancelar:hover {
+  background-color: #e5e7eb;
+}
+
+.btn-modal-eliminar {
+  background-color: #198754;
+  color: white;
+}
+
+.btn-modal-eliminar:hover {
+  background-color: #147a3f;
+}
+
+@keyframes modalHistorialEntrada {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 520px) {
+  .modal-historial-actions {
+    flex-direction: column;
+  }
+
+  .btn-modal-cancelar,
+  .btn-modal-eliminar {
+    width: 100%;
+  }
+}
