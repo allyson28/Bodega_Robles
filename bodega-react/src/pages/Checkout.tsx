@@ -5,7 +5,15 @@ import { crearPedido } from '../services/pedidoService';
 import '../styles/Checkout.css';
 
 function Checkout() {
-  const { carrito, total, vaciarCarrito } = useCarrito();
+  const {
+  carrito,
+  total,
+  descuento,
+  totalFinal,
+  cuponAplicado,
+  vaciarCarrito,
+} = useCarrito();
+
   const navigate = useNavigate();
 
   const [metodoPago, setMetodoPago] = useState('');
@@ -42,9 +50,11 @@ function Checkout() {
         fecha: new Date().toLocaleString('es-PE'),
         metodoPago,
         productos: carrito,
-        total,
+        subtotal: total,
+        descuento,
+        cuponAplicado,
+        total: totalFinal,
       };
-
       localStorage.setItem(
         'ultimo_pedido_bodega_robles',
         JSON.stringify(pedidoFinalizado)
@@ -148,26 +158,28 @@ function Checkout() {
               </div>
 
               <div className="checkout-total-box">
-                <div className="checkout-total-line">
-                  <span>Productos</span>
-                  <strong>{cantidadTotal}</strong>
-                </div>
+  <div className="checkout-total-line">
+    <span>Productos</span>
+    <strong>{cantidadTotal}</strong>
+  </div>
 
-                <div className="checkout-total-line">
-                  <span>Subtotal</span>
-                  <strong>S/ {total.toFixed(2)}</strong>
-                </div>
+  <div className="checkout-total-line">
+    <span>Subtotal</span>
+    <strong>S/ {total.toFixed(2)}</strong>
+  </div>
 
-                <div className="checkout-total-line">
-                  <span>Descuento</span>
-                  <strong>S/ 0.00</strong>
-                </div>
+  <div className="checkout-total-line">
+    <span>
+      Descuento {cuponAplicado ? `(${cuponAplicado})` : ''}
+    </span>
+    <strong>- S/ {descuento.toFixed(2)}</strong>
+  </div>
 
-                <div className="checkout-total-final">
-                  <span>Total a pagar</span>
-                  <span>S/ {total.toFixed(2)}</span>
-                </div>
-              </div>
+  <div className="checkout-total-final">
+    <span>Total a pagar</span>
+    <span>S/ {totalFinal.toFixed(2)}</span>
+  </div>
+</div>
             </section>
 
             {/* MÉTODO DE PAGO */}

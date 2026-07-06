@@ -1,20 +1,33 @@
 import { Link } from 'react-router-dom';
 import { useCarrito } from '../hooks/CarritoContext';
 import '../styles/Carrito.css';
+import { useEffect, useState } from 'react';
 
 function Carrito() {
   const {
-    carrito,
-    actualizarCantidad,
-    eliminarProducto,
-    vaciarCarrito,
-    total,
-  } = useCarrito();
+  carrito,
+  actualizarCantidad,
+  eliminarProducto,
+  vaciarCarrito,
+  total,
+  descuento,
+  totalFinal,
+  cuponAplicado,
+  aplicarCupon,
+  quitarCupon,
+} = useCarrito();
 
   const cantidadTotal = carrito.reduce(
     (acumulador, item) => acumulador + item.cantidad,
     0
   );
+
+  const [codigoCupon, setCodigoCupon] = useState(cuponAplicado);
+const [mensajeCupon, setMensajeCupon] = useState('');
+
+useEffect(() => {
+  setCodigoCupon(cuponAplicado);
+}, [cuponAplicado]);
 
   return (
     <div className="carrito-page">
@@ -132,9 +145,65 @@ function Carrito() {
             <aside className="carrito-summary-card">
               <h4>Resumen de compra</h4>
 
-              <div className="summary-line">
-                <span>Productos</span>
-                <strong>{cantidadTotal}</strong>
+              <div className="summary-total">
+                <span>Total</span>
+                <strong>S/ {totalFinal.toFixed(2)}</strong>
+              </div>
+
+              <div className="cupon-box">
+                <label>Código promocional</label>
+
+                <div className="cupon-input-group">
+                  <input
+                    type="text"
+                    placeholder="Ej: ROBLES10"
+                    value={codigoCupon}
+                    onChange={(e) => setCodigoCupon(e.target.value)}
+                    disabled={!!cuponAplicado}
+                  />
+
+                  {cuponAplicado ? (
+                    <button
+                      type="button"
+                      className="btn-quitar-cupon"
+                      onClick={() => {
+                        quitarCupon();
+                        setCodigoCupon('');
+                        setMensajeCupon('');
+                      }}
+                    >
+                      Quitar
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn-aplicar-cupon"
+                      onClick={() => {
+                        const aplicado = aplicarCupon(codigoCupon);
+
+                        if (aplicado) {
+                          setMensajeCupon('Cupón aplicado correctamente.');
+                        } else {
+                          setMensajeCupon('Cupón inválido.');
+                        }
+                      }}
+                    >
+                      Aplicar
+                    </button>
+                  )}
+                </div>
+
+                {cuponAplicado && (
+                  <p className="cupon-ok">
+                    Cupón aplicado: {cuponAplicado}
+                  </p>
+                )}
+
+                {mensajeCupon && !cuponAplicado && (
+                  <p className="cupon-error">
+                    {mensajeCupon}
+                  </p>
+                )}
               </div>
 
               <div className="summary-line">
@@ -143,14 +212,12 @@ function Carrito() {
               </div>
 
               <div className="summary-line">
-                <span>Descuento</span>
-                <strong>S/ 0.00</strong>
+                <span>
+                  Descuento {cuponAplicado ? `(${cuponAplicado})` : ''}
+                </span>
+                <strong>- S/ {descuento.toFixed(2)}</strong>
               </div>
 
-              <div className="summary-total">
-                <span>Total</span>
-                <strong>S/ {total.toFixed(2)}</strong>
-              </div>
 
               <Link to="/checkout" className="btn-checkout">
                 Proceder al Pago

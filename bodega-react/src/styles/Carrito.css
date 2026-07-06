@@ -305,6 +305,89 @@
   margin-bottom: 22px;
 }
 
+.cupon-box {
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cupon-box label {
+  display: block;
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.cupon-input-group {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.cupon-input-group input {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  border: 1px solid #111827;
+  border-radius: 10px;
+  padding: 0 12px;
+  background-color: #ffffff;
+  color: #111827;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.cupon-input-group input::placeholder {
+  color: #8b8b8b;
+  font-size: 0.85rem;
+}
+
+.cupon-input-group input:focus {
+  border-color: #198754;
+  box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.12);
+}
+
+.btn-aplicar-cupon,
+.btn-quitar-cupon {
+  flex-shrink: 0;
+  border: none;
+  border-radius: 10px;
+  padding: 0 14px;
+  height: 42px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.btn-aplicar-cupon {
+  background-color: #198754;
+  color: white;
+}
+
+.btn-aplicar-cupon:hover {
+  background-color: #147a3f;
+}
+
+.btn-quitar-cupon {
+  background-color: #fff1f2;
+  color: #dc3545;
+}
+
+.cupon-ok {
+  color: #198754;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.cupon-error {
+  color: #dc3545;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
 @media (max-width: 992px) {
   .carrito-layout {
     grid-template-columns: 1fr;
