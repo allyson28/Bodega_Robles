@@ -268,40 +268,29 @@ function Checkout() {
                   {metodoPago === 'yape' && (
                     <div className="payment-option-box">
                       <h5>Pagar con Yape</h5>
-                      <p>Escanea el QR o ingresa tu número Yape.</p>
+                      <p>Escanea el QR de Yape.</p>
 
                       <img
-                        src="/imagenes/qr-yape.png"
+                        src="/imagenes/YAPE-QR.png"
                         className="payment-qr"
                         alt="QR Yape"
                       />
 
-                      <input
-                        type="text"
-                        name="yapeNum"
-                        placeholder="Número Yape"
-                        className="form-control"
-                      />
+                      
                     </div>
                   )}
 
                   {metodoPago === 'plin' && (
                     <div className="payment-option-box">
                       <h5>Pagar con Plin</h5>
-                      <p>Escanea el QR o ingresa tu número Plin.</p>
+                      <p>Escanea el QR de Plin.</p>
 
                       <img
-                        src="/imagenes/qr-plin.png"
+                        src="/imagenes/PLIN-QR.png"
                         className="payment-qr"
                         alt="QR Plin"
                       />
 
-                      <input
-                        type="text"
-                        name="plinNum"
-                        placeholder="Número Plin"
-                        className="form-control"
-                      />
                     </div>
                   )}
 
