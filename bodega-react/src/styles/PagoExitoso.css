@@ -1,0 +1,276 @@
+.pago-page {
+  min-height: calc(100vh - 140px);
+  background-color: #f7f8fa;
+  padding: 42px 24px 70px;
+}
+
+.pago-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.pago-hero {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.pago-icon {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background-color: #e9f8ef;
+  color: #198754;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 25px rgba(25, 135, 84, 0.14);
+}
+
+.pago-title {
+  color: #198754;
+  font-size: 2.1rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.pago-subtitle {
+  color: #6b7280;
+  margin: 0;
+}
+
+.pago-card {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 22px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+.pago-card-header {
+  background-color: #198754;
+  color: white;
+  padding: 20px 26px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.pago-card-header h4 {
+  margin: 0;
+  font-weight: 850;
+  font-size: 1.25rem;
+}
+
+.pago-card-header span {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.pago-info {
+  padding: 24px 26px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  border-bottom: 1px solid #eef0f2;
+}
+
+.pago-info-box {
+  background-color: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.pago-info-box span {
+  display: block;
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.pago-info-box strong {
+  color: #111827;
+  font-size: 1rem;
+}
+
+.pago-products {
+  padding: 24px 26px;
+}
+
+.pago-products-title {
+  font-size: 1.15rem;
+  font-weight: 850;
+  color: #1f2937;
+  margin-bottom: 16px;
+}
+
+.pago-product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pago-product-item {
+  display: grid;
+  grid-template-columns: 1fr 110px 120px 130px;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid #edf0f3;
+  border-radius: 16px;
+  background-color: #fff;
+}
+
+.pago-product-name {
+  font-weight: 800;
+  color: #111827;
+}
+
+.pago-product-detail {
+  color: #6b7280;
+  font-size: 0.92rem;
+}
+
+.pago-product-price,
+.pago-product-subtotal {
+  font-weight: 800;
+  color: #198754;
+  text-align: right;
+}
+
+.pago-summary {
+  background-color: #f8fafc;
+  padding: 24px 26px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pago-summary-box {
+  width: 100%;
+  max-width: 380px;
+}
+
+.pago-summary-line,
+.pago-summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pago-summary-line {
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
+.pago-summary-line strong {
+  color: #111827;
+}
+
+.pago-summary-total {
+  border-top: 1px solid #d1d5db;
+  padding-top: 16px;
+  margin-top: 16px;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #111827;
+}
+
+.pago-summary-total strong {
+  color: #198754;
+}
+
+.pago-actions {
+  margin-top: 26px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-comprobante,
+.btn-volver-tienda {
+  border-radius: 14px;
+  padding: 13px 22px;
+  font-weight: 800;
+  text-decoration: none;
+  border: none;
+}
+
+.btn-comprobante {
+  background-color: #198754;
+  color: white;
+}
+
+.btn-comprobante:hover {
+  background-color: #147a3f;
+  color: white;
+}
+
+.btn-volver-tienda {
+  background-color: white;
+  color: #198754;
+  border: 1px solid #198754;
+}
+
+.btn-volver-tienda:hover {
+  background-color: #eef8f1;
+  color: #147a3f;
+}
+
+.pago-empty {
+  background: white;
+  border-radius: 20px;
+  padding: 50px 24px;
+  text-align: center;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+}
+
+.pago-empty h4 {
+  font-weight: 850;
+  color: #1f2937;
+}
+
+.pago-empty p {
+  color: #6b7280;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 900px) {
+  .pago-info {
+    grid-template-columns: 1fr;
+  }
+
+  .pago-product-item {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .pago-product-price,
+  .pago-product-subtotal {
+    text-align: left;
+  }
+}
+
+@media (max-width: 600px) {
+  .pago-page {
+    padding: 28px 16px 54px;
+  }
+
+  .pago-title {
+    font-size: 1.7rem;
+  }
+
+  .pago-product-item {
+    grid-template-columns: 1fr;
+  }
+
+  .pago-summary {
+    justify-content: center;
+  }
+}
