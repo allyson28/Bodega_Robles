@@ -44,7 +44,7 @@ export function CarritoProvider({ children }: { children: ReactNode }) {
     return [];
   });
 
-  const [cuponAplicado, setCuponAplicado] = useState(() => {
+  const [cuponAplicado, setCuponAplicado] = useState<string>(() => {
     return localStorage.getItem(CUPON_STORAGE_KEY) || '';
   });
 
@@ -117,20 +117,20 @@ export function CarritoProvider({ children }: { children: ReactNode }) {
   );
 
   const calcularDescuento = () => {
-  if (cuponAplicado === 'ROBLES10') {
-    return total * 0.1;
-  }
+    if (cuponAplicado === 'ROBLES10') {
+      return total * 0.1;
+    }
 
-  if (cuponAplicado === 'BIENVENIDA5') {
-    return Math.min(5, total);
-  }
+    if (cuponAplicado === 'BIENVENIDA5') {
+      return Math.min(5, total);
+    }
 
-  return 0;
-};
+    return 0;
+  };
 
-const descuento = calcularDescuento();
+  const descuento = calcularDescuento();
 
-const totalFinal = Math.max(total - descuento, 0);
+  const totalFinal = Math.max(total - descuento, 0);
 
   const aplicarCupon = (codigo: string) => {
     const codigoNormalizado = codigo.trim().toUpperCase();

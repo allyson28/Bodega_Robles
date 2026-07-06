@@ -24,6 +24,13 @@ function Checkout() {
     0
   );
 
+    console.log('Checkout:', {
+    total,
+    descuento,
+    totalFinal,
+    cuponAplicado,
+  });
+
   const finalizarCompra = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -55,6 +62,7 @@ function Checkout() {
         cuponAplicado,
         total: totalFinal,
       };
+
       localStorage.setItem(
         'ultimo_pedido_bodega_robles',
         JSON.stringify(pedidoFinalizado)
@@ -158,28 +166,28 @@ function Checkout() {
               </div>
 
               <div className="checkout-total-box">
-  <div className="checkout-total-line">
-    <span>Productos</span>
-    <strong>{cantidadTotal}</strong>
-  </div>
+                <div className="checkout-total-line">
+                  <span>Productos</span>
+                  <strong>{cantidadTotal}</strong>
+                </div>
 
-  <div className="checkout-total-line">
-    <span>Subtotal</span>
-    <strong>S/ {total.toFixed(2)}</strong>
-  </div>
+                <div className="checkout-total-line">
+                  <span>Subtotal</span>
+                  <strong>S/ {total.toFixed(2)}</strong>
+                </div>
 
-  <div className="checkout-total-line">
-    <span>
-      Descuento {cuponAplicado ? `(${cuponAplicado})` : ''}
-    </span>
-    <strong>- S/ {descuento.toFixed(2)}</strong>
-  </div>
+                <div className="checkout-total-line">
+                  <span>
+                    Descuento {cuponAplicado ? `(${cuponAplicado})` : ''}
+                  </span>
+                  <strong>- S/ {descuento.toFixed(2)}</strong>
+                </div>
 
-  <div className="checkout-total-final">
-    <span>Total a pagar</span>
-    <span>S/ {totalFinal.toFixed(2)}</span>
-  </div>
-</div>
+                <div className="checkout-total-final">
+                  <span>Total a pagar</span>
+                  <span>S/ {totalFinal.toFixed(2)}</span>
+                </div>
+              </div>
             </section>
 
             {/* MÉTODO DE PAGO */}
